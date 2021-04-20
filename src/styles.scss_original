@@ -1,0 +1,21 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$clearpay-fe-primary: mat-palette($mat-indigo);
+$clearpay-fe-accent: mat-palette($mat-pink, A200, A100, A400);
+
+$clearpay-fe-warn: mat-palette($mat-red);
+
+$clearpay-fe-theme: mat-light-theme((
+  color: (
+    primary: $clearpay-fe-primary,
+    accent: $clearpay-fe-accent,
+    warn: $clearpay-fe-warn,
+  )
+));
+
+@include angular-material-theme($clearpay-fe-theme);
+
+html, body { width: 100vw; height: 100vh; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

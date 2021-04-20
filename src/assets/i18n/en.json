@@ -1,0 +1,17 @@
+{
+  "app": {
+    "title": "clearpay"
+  },
+  "administration": {
+    "title": "Administration panel",
+    "users": {
+      "title": "Users"
+    },
+    "wallets": {
+      "title": "Wallets"
+    },
+    "transactions": {
+      "title": "Transactions"
+    }
+  }
+}
