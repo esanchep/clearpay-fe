@@ -2,16 +2,28 @@
   "app": {
     "title": "clearpay"
   },
+  "common": {
+    "balance": "Balance"
+  },
   "administration": {
     "title": "Administration panel",
     "users": {
-      "title": "Users"
+      "title": "Users",
+      "username": "Username",
+      "name": "Name",
+      "surname": "Surname"
     },
     "wallets": {
-      "title": "Wallets"
+      "title": "Wallets",
+      "wallet-name": "Wallet name"
     },
     "transactions": {
-      "title": "Transactions"
+      "title": "Latest transactions",
+      "new-transaction": "New transaction",
+      "from": "From",
+      "to": "To",
+      "amount": "Amount",
+      "date": "Date"
     }
   }
 }

@@ -1,5 +1,9 @@
 $gap: 20px;
 
+h1 {
+  font-weight: bold;
+}
+
 .grid {
   display: grid;
   width: 100%;
@@ -13,16 +17,13 @@ $gap: 20px;
 
   .users {
     grid-area: users;
-    background-color: red;
   }
 
   .wallets {
     grid-area: wallets;
-    background-color: blue;
   }
 
   .transactions {
     grid-area: transactions;
-    background-color: green;
   }
 }

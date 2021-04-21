@@ -1,0 +1,18 @@
+.users-content {
+  height: calc(100% - 48px - (39.063px + 17.5px));
+  overflow-y: auto;
+  background-color: #efefef;
+
+  .users-table {
+    width: 100%;
+
+    .mat-header-cell {
+      color: black;
+      font-weight: bold;
+    }
+
+    tr:not(.mat-header-row):hover {
+      background: #eaddf2;
+    }
+  }
+}
