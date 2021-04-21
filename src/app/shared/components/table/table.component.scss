@@ -1,0 +1,22 @@
+$filterHeight: 56.563px;
+
+.table-content {
+  width: 100%;
+  height: calc(100% - #{$filterHeight});
+  overflow-y: auto;
+  background-color: #efefef;
+
+  .table {
+    width: 100%;
+
+    .mat-header-cell {
+      color: black;
+      font-weight: bold;
+    }
+
+    tr:not(.mat-header-row):hover,
+    .selected-row {
+      background: #eaddf2;
+    }
+  }
+}
