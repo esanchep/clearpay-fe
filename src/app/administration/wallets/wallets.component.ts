@@ -7,7 +7,10 @@ import { WalletService } from './wallets.service';
 @Component({
   selector: 'app-wallets',
   templateUrl: './wallets.component.html',
-  styleUrls: ['./wallets.component.scss']
+  styleUrls: [
+    '../administration.sections.scss',
+    './wallets.component.scss'
+  ]
 })
 export class WalletsComponent implements OnInit {
   public wallets: Wallet[];
@@ -21,7 +24,6 @@ export class WalletsComponent implements OnInit {
   ngOnInit(): void {
     this.walletsSubscription = this.walletService.getAllWallets()
       .subscribe((response: GetWalletsResponse) => {
-        console.log(response)
         this.wallets = [...response.wallets];
       });
   }

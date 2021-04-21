@@ -7,13 +7,15 @@ import { UsersService } from './users.service';
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  styleUrls: [
+    '../administration.sections.scss',
+    './users.component.scss'
+  ]
 })
 export class UsersComponent implements OnInit, OnDestroy {
   public users: User[];
   public displayedColumns = ['username', 'name', 'surname'];
   public literal = UserLiteral;
-  public filter = "";
   private usersSubscription: Subscription;
 
   constructor(private userService: UsersService) { }
@@ -21,7 +23,6 @@ export class UsersComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.usersSubscription = this.userService.getAllUsers()
       .subscribe((response: GetUsersResponse) => {
-        console.log(response)
         this.users = [...response.users];
       });
   }

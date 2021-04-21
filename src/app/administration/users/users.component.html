@@ -1,28 +1,5 @@
 <h2>{{literal.title | translate}}</h2>
 
-<mat-form-field class="example-form-field">
-  <mat-label>Filter</mat-label>
-  <input matInput type="text" [(ngModel)]="filter" />
-</mat-form-field>
-
-<div class="users-content mat-elevation-z8">
-  <table mat-table [dataSource]="users" class="users-table">
-    <ng-container matColumnDef="username">
-      <th mat-header-cell *matHeaderCellDef>{{literal.username | translate | uppercase}}</th>
-      <td mat-cell *matCellDef="let user">{{user.username}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>{{literal.name | translate | uppercase}}</th>
-      <td mat-cell *matCellDef="let user">{{user.name}}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="surname">
-      <th mat-header-cell *matHeaderCellDef>{{literal.surname | translate | uppercase}}</th>
-      <td mat-cell *matCellDef="let user">{{user.surname}}</td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+<div class="section-content">
+  <app-table [data]="users" [displayedColumns]="displayedColumns"></app-table>
 </div>
