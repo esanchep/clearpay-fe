@@ -1,0 +1,53 @@
+.new-transaction-content {
+  display: flex;
+
+  .from-wallet,
+  .to-wallet {
+    display: flex;
+    flex-direction: column;
+
+    .form-item {
+      width: 225px;
+      margin-bottom: 10px;
+    }
+  }
+
+  .from-wallet {
+    padding-right: 100px;
+    position: relative;
+
+    .amount {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      right: calc(0px - (168px / 2));
+      bottom: 0;
+
+      .pre-input,
+      .post-input {
+        padding-bottom: 21px;
+      }
+
+      .pre-input {
+        margin-right: 10px;
+      }
+
+      .mat-form-field {
+        width: 100px;
+        background-color: white;
+      }
+
+      .post-input {
+        margin-left: 10px;
+      }
+    }
+  }
+
+  .to-wallet {
+    padding-left: 100px;
+  }
+}
+
+// ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+//   background-color: white;
+// }

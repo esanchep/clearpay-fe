@@ -1,5 +1,20 @@
 $filterHeight: 56.563px;
 
+.table-toolbar {
+  display: flex;
+  justify-content: space-between;
+
+  .table-filter {
+    width: 50%;
+    max-width: 500px;
+  }
+
+  .table-toolbar-extra-content {
+    display: block;
+    height: 36px;
+  }
+}
+
 .table-content {
   width: 100%;
   height: calc(100% - #{$filterHeight});

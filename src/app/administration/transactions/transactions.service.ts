@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { GetTransactionsRequest, GetTransactionsResponse, Transaction } from './transactions.models';
+import { GetTransactionsRequest, GetTransactionsResponse, NewTransactionRequest, Transaction } from './transactions.models';
 
 @Injectable({
   providedIn: 'root'
@@ -176,6 +176,29 @@ export class TransactionService {
   private getResponse(transactions: Transaction[]): Observable<GetTransactionsResponse> {
     const response = { transactions };
     return new Observable(subscriber => {
+      setTimeout(() => subscriber.next(response), 0);
+    });
+  }
+
+  // TODO NewTransactionRequest stays as it is but GetTransactionsResponse will receive a User and Wallet objects instead of names/ids
+  newTransaction(request: NewTransactionRequest): Observable<GetTransactionsResponse> {
+    request = {
+      fromUserId: '1',
+      fromWalletId: '1',
+      amount: 10,
+      toUserId: '2',
+      toWalletId: '2',
+    } as NewTransactionRequest;
+    this.TRANSACTIONS.push({
+      id: (this.initialId++).toString(),
+      amount: request.amount,
+      date: new Date(),
+      from: 'One',
+      to: 'Two',
+      walletId: '1'
+    });
+    return new Observable(subscriber => {
+      const response: GetTransactionsResponse = { transactions: this.TRANSACTIONS };
       setTimeout(() => subscriber.next(response), 0);
     });
   }

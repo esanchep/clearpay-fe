@@ -5,7 +5,7 @@ export interface Transaction {
   to: string;
   amount: number;
   date: Date;
-  balance: number;
+  balance?: number;
 }
 
 export interface GetTransactionsRequest {
@@ -14,4 +14,12 @@ export interface GetTransactionsRequest {
 
 export interface GetTransactionsResponse {
   transactions: Transaction[];
+}
+
+export interface NewTransactionRequest {
+  fromUserId: string;
+  fromWalletId: string;
+  amount: number;
+  toUserId: string;
+  toWalletId: string;
 }

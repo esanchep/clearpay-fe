@@ -1,7 +1,9 @@
+import { NewTransactionDialogComponent } from './new-transaction-dialog/new-transaction-dialog.component';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { TransactionLiteral } from './transactions.literals';
-import { GetTransactionsResponse, Transaction } from './transactions.models';
+import { GetTransactionsResponse, NewTransactionRequest, Transaction } from './transactions.models';
 import { TransactionService } from './transactions.service';
 
 @Component({
@@ -17,19 +19,45 @@ export class TransactionsComponent implements OnInit {
   public displayedColumns = ['from', 'to', 'amount', 'date', 'balance'];
   public literal = TransactionLiteral;
   public filter = "";
-  private transactionsSubscription: Subscription;
+  private subscriptions: Subscription[] = [];
 
-  constructor(private transactionService: TransactionService) { }
+  constructor(
+    public dialog: MatDialog,
+    private transactionService: TransactionService
+  ) { }
 
   ngOnInit(): void {
-    this.transactionsSubscription = this.transactionService.getTransactionsByWallet({ walletId: '2' })
+    this.subscriptions.push(this.transactionService.getTransactionsByWallet({ walletId: '2' })
       .subscribe((response: GetTransactionsResponse) => {
         this.transactions = [...response.transactions];
-      });
+      })
+    );
+  }
+
+  onNewTransaction(): void {
+    const dialogRef = this.dialog.open(NewTransactionDialogComponent, {
+      data: {
+        fromUser: 'terminator',
+        fromWallet: 'One',
+        fromBalance: 245.35
+      }
+    });
+    this.subscriptions.push(
+      dialogRef.afterClosed().subscribe((transaction: NewTransactionRequest) => {
+        this.subscriptions.push(
+          this.transactionService.newTransaction(transaction).subscribe(
+            result => this.transactions = [ ...result.transactions ],
+            error => console.error(error)
+          )
+        );
+      })
+    );
   }
 
   ngOnDestroy(): void {
-    this.transactionsSubscription.unsubscribe();
+    if (!!this.subscriptions) {
+      this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    }
   }
 
 }

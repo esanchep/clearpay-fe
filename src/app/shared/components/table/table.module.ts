@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -23,6 +23,10 @@ import { TableComponent } from './table.component';
     TranslateModule
   ],
   exports: [TableComponent],
+  providers: [
+    CurrencyPipe,
+    DatePipe
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class TableModule { }

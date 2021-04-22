@@ -1,0 +1,68 @@
+<h2 mat-dialog-title>New transaction</h2>
+
+<mat-dialog-content class="mat-typography">
+  <div class="new-transaction-content" [formGroup]="form">
+    <div class="form from-wallet">
+      <h3>From</h3>
+      <!-- FROM USER -->
+      <mat-form-field class="form-item" appearance="outline">
+        <mat-label>User</mat-label>
+        <input matInput type="text" formControlName="fromUsername">
+      </mat-form-field>
+      <!-- FROM WALLET -->
+      <mat-form-field class="form-item" appearance="outline">
+        <mat-label>Wallet</mat-label>
+        <input matInput type="text" formControlName="fromWalletName">
+      </mat-form-field>
+      <!-- FROM AMOUNT -->
+      <div class="amount">
+        <mat-icon class="pre-input">chevron_right</mat-icon>
+        <mat-form-field class="form-item" appearance="outline">
+          <mat-label>Amount</mat-label>
+          <input matInput type="number" (focus)="onFocusFormElement()" formControlName="amount">
+          <mat-icon matSuffix> attach_money</mat-icon>
+          <mat-error *ngIf="form.get('amount').hasError('required')">
+            This field is required
+          </mat-error>
+          <mat-error *ngIf="form.get('amount').hasError('min')">
+            Amount must be a number greater than 0
+          </mat-error>
+        </mat-form-field>
+        <mat-icon class="post-input">chevron_right</mat-icon>
+      </div>
+      <!-- FROM BALANCE -->
+      <mat-form-field class="form-item" appearance="outline">
+        <mat-label>Balance</mat-label>
+        <input matInput type="number" formControlName="fromBalance">
+      </mat-form-field>
+    </div>
+    <div class="form to-wallet">
+      <h3>To</h3>
+      <!-- TO USER -->
+      <mat-form-field class="form-item" appearance="outline">
+        <mat-label>Destiny User</mat-label>
+        <input matInput type="text" (focus)="onFocusFormElement('toUser')" formControlName="toUser">
+        <mat-error *ngIf="form.get('toUser').hasError('required')">
+          This field is required
+        </mat-error>
+      </mat-form-field>
+      <!-- TO WALLET -->
+      <mat-form-field class="form-item" appearance="outline">
+        <mat-label>Destiny Wallet</mat-label>
+        <input matInput type="text" (focus)="onFocusFormElement('toWallet')" formControlName="toWallet">
+        <mat-error *ngIf="form.get('toWallet').hasError('required')">
+          This field is required
+        </mat-error>
+      </mat-form-field>
+      <!-- TO BALANCE -->
+      <mat-form-field class="form-item" appearance="outline">
+        <mat-label>Balance</mat-label>
+        <input matInput type="number" formControlName="toBalance">
+      </mat-form-field>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="getTransaction()" cdkFocusInitial>Add</button>
+</mat-dialog-actions>
