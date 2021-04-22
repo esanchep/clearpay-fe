@@ -1,7 +1,9 @@
 import { Literal } from "src/assets/i18n/literals";
 
+const WALLETS = Literal.administration.wallets;
+
 export const WalletLiteral = {
-  title: Literal.administration.wallets.title,
-  walletName: Literal.administration.wallets.walletName,
-  balance: Literal.administration.wallets.balance
+  title: WALLETS.title,
+  walletName: WALLETS.walletName,
+  balance: Literal.common.balance
 };

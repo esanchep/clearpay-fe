@@ -3,7 +3,11 @@
     "title": "clearpay"
   },
   "common": {
-    "balance": "Balance"
+    "balance": "Balance",
+    "new-transaction": "New transaction",
+    "from": "From",
+    "amount": "Amount",
+    "to": "To"
   },
   "administration": {
     "title": "Administration panel",
@@ -20,10 +24,17 @@
     "transactions": {
       "title": "Latest transactions",
       "new-transaction": "New transaction",
-      "from": "From",
-      "to": "To",
-      "amount": "Amount",
       "date": "Date"
+    },
+    "new-transaction": {
+      "user": "User",
+      "wallet": "Wallet",
+      "destination-user": "Destination User",
+      "destination-wallet": "Destination Wallet",
+      "cancel": "Cancel",
+      "add": "Add",
+      "field-required": "This field is required",
+      "invalid-amount": "Amount must be a valid number greater than 0"
     }
   }
 }

@@ -2,6 +2,8 @@
 
 <div class="section-content">
   <app-table [data]="transactions" [displayedColumns]="displayedColumns">
-    <button mat-raised-button tableToolbarButton color="primary" (click)="onNewTransaction()">New transaction</button>
+    <button mat-raised-button tableToolbarButton color="primary" (click)="onNewTransaction()">
+      {{literal.newTransaction | translate}}
+    </button>
   </app-table>
 </div>

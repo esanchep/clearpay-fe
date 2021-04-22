@@ -1,8 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Transaction } from '../transactions.models';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { NewTransactionDialogInputData } from './new-transaction-dialog-models';
+import { NewTransactionLiteral } from './new-transaction-dialog.literals';
 
 @Component({
   selector: 'app-new-transaction-dialog',
@@ -11,6 +12,7 @@ import { NewTransactionDialogInputData } from './new-transaction-dialog-models';
 })
 export class NewTransactionDialogComponent implements OnInit {
   public form: FormGroup;
+  public literal = NewTransactionLiteral;
   private isRightPanelVisible = false;
 
   constructor(
@@ -55,14 +57,6 @@ export class NewTransactionDialogComponent implements OnInit {
 
   private updateBalancesOnAmountChange(): void {
     this.form.get('fromAmount')
-  }
-
-  onFocusFormElement(element?: string): void {
-    if (!!element && (element === 'toUser' || element === 'toWallet') && !this.isRightPanelVisible) {
-      this.isRightPanelVisible = true;
-      return;
-    }
-    this.isRightPanelVisible = false;
   }
 
   getTransaction(): Transaction {

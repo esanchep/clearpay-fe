@@ -44,12 +44,18 @@ export class TransactionsComponent implements OnInit {
     });
     this.subscriptions.push(
       dialogRef.afterClosed().subscribe((transaction: NewTransactionRequest) => {
-        this.subscriptions.push(
-          this.transactionService.newTransaction(transaction).subscribe(
-            result => this.transactions = [ ...result.transactions ],
-            error => console.error(error)
-          )
-        );
+        if (!!transaction) {
+          this.subscriptions.push(
+            this.transactionService.newTransaction(transaction).subscribe(
+              result => {
+                if (!!transaction) {
+                  this.transactions = [...result.transactions]
+                }
+              },
+              error => console.error(error)
+            )
+          );
+        }
       })
     );
   }
