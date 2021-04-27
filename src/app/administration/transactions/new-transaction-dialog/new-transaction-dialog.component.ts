@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSelectChange } from '@angular/material/select';
 import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { User } from '../../users/users.models';
@@ -22,6 +23,8 @@ export class NewTransactionDialogComponent implements OnInit, OnDestroy {
   public eligibleDestinationUsers: User[];
   public eligibleDestinationWallets: Wallet[];
   private newTransactionSubscription: Subscription;
+  private selectedSourceWalletBalance: number;
+  private selectedDestinationWalletBalance: number;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,6 +34,7 @@ export class NewTransactionDialogComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.store.pipe(select(fromNewTransactionSelectors.selectNewTransaction))
       .subscribe((newTransaction: NewTransactionState) => {
+        this.selectedSourceWalletBalance = newTransaction.sourceWallet.balance;
         this.buildForm(newTransaction);
         this.initFormState();
       }).unsubscribe();
@@ -84,9 +88,12 @@ export class NewTransactionDialogComponent implements OnInit, OnDestroy {
     this.setAmountFieldEditable();
   }
 
-  onDestinationWalletSelected(): void {
+  onDestinationWalletSelected($selectedWalletChange: MatSelectChange): void {
+    this.selectedDestinationWalletBalance = $selectedWalletChange.value.balance;
     const destinationWalletBalance = this.form.get('destinationWallet').value?.balance;
+    this.form.get('sourceBalance').setValue(this.selectedSourceWalletBalance);
     this.form.get('destinationBalance').setValue(destinationWalletBalance);
+    this.form.get('amount').setValue(0);
     this.setAmountFieldEditable();
   }
 
@@ -101,7 +108,8 @@ export class NewTransactionDialogComponent implements OnInit, OnDestroy {
   updateBalances(): void {
     const amount = this.form.get('amount').value;
     if (this.areDestinationUserAndWalletSelected()) {
-      this.form.get('destinationBalance').setValue(amount);
+      this.form.get('sourceBalance').setValue(this.selectedSourceWalletBalance - amount);
+      this.form.get('destinationBalance').setValue(this.selectedDestinationWalletBalance + amount);
     }
   }
 
@@ -114,6 +122,7 @@ export class NewTransactionDialogComponent implements OnInit, OnDestroy {
       sourceWalletId: this.form.get('sourceWalletId').value,
       destinationWalletId: this.form.get('destinationWallet').value?.id,
       amount: this.form.get('amount').value,
+      date: new Date(),
       comment: this.form.get('comment').value
     };
     return newTransaction;

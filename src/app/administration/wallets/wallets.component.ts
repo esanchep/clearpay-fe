@@ -53,6 +53,18 @@ export class WalletsComponent implements OnInit, OnDestroy {
     );
   }
 
+  shouldNewTransactionButtonBeDisabled(): boolean {
+    return !this.areUserAndWalletSelected() || !this.isValidBalanceFromSelectedWallet();
+  }
+
+  private areUserAndWalletSelected(): boolean {
+    return !!this.selectedUser && !!this.selectedWallet;
+  }
+
+  private isValidBalanceFromSelectedWallet(): boolean {
+    return !!this.selectedWallet && this.selectedWallet.balance > 0;
+  }
+
   onRowSelected($selectedWallet: Wallet): void {
     this.selectedWallet = $selectedWallet;
     this.store.dispatch(fromTransactionsActions.resetState());

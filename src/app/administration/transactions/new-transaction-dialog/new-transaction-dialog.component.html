@@ -51,7 +51,7 @@
       <!-- DESTINATION WALLET -->
       <mat-form-field class="form-item" appearance="outline">
         <mat-label>{{literal.wallet | translate}}</mat-label>
-        <mat-select formControlName="destinationWallet" (selectionChange)="onDestinationWalletSelected()">
+        <mat-select formControlName="destinationWallet" (selectionChange)="onDestinationWalletSelected($event)">
           <mat-option *ngFor="let eligibleWallet of eligibleDestinationWallets" [value]="eligibleWallet">{{eligibleWallet.alias}}</mat-option>
         </mat-select>
         <mat-error *ngIf="form.get('destinationWallet').hasError('required')">
