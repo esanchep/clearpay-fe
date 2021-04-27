@@ -11,7 +11,7 @@ export const WalletsActions = {
 
 export const getWalletsByUserId = createAction(
   WalletsActions.GET_WALLETS_BY_USER_ID,
-  props<{ userId: string }>()
+  props<{ userId: string; }>()
 );
 
 export const getWalletsByUserIdSuccess = createAction(

@@ -29,15 +29,17 @@ export class WalletsComponent implements OnInit, OnDestroy {
   constructor(private store: Store<RootState>) { }
 
   ngOnInit(): void {
-    this.walletsSubscription = this.store.pipe(select(fromUsersSelectors.selectSelectedUSer))
-      .subscribe((selectedUser: User) => {
-        if (!!selectedUser) {
-          this.store.dispatch(fromWalletsActions.getWalletsByUserId({ userId: selectedUser.id }));
-        }
-      });
+    this.walletsSubscription =
+      this.store.pipe(select(fromUsersSelectors.selectSelectedUser))
+        .subscribe((selectedUser: User) => {
+          if (!!selectedUser) {
+            this.store.dispatch(fromWalletsActions.getWalletsByUserId({ userId: selectedUser.id }));
+          }
+        });
 
-    this.walletsSubscription.add(this.store.pipe(select(fromWalletsSelectors.selectAllWallets))
-      .subscribe((walletList: Wallet[]) => this.wallets = walletList)
+    this.walletsSubscription.add(
+      this.store.pipe(select(fromWalletsSelectors.selectAllWallets))
+        .subscribe((walletList: Wallet[]) => this.wallets = walletList)
     );
   }
 

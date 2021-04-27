@@ -14,7 +14,7 @@ export const selectAllUsersButSelectedUser = createSelector(
   (state: UsersState) => state.userList.filter((user: User) => user.id !== state?.selectedUser?.id)
 );
 
-export const selectSelectedUSer = createSelector(
+export const selectSelectedUser = createSelector(
   usersSelectors,
   (state: UsersState) => state?.selectedUser
 );

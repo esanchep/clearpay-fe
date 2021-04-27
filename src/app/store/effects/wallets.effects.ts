@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
-import { Wallet } from 'src/app/administration/wallets/wallets.models';
 import { WalletsService } from 'src/app/administration/wallets/wallets.service';
-import { fromWalletsActions } from './../actions';
+import { Wallet } from './../../administration/wallets/wallets.models';
 import { ApiResponse } from './../../shared/models/response.models';
+import { fromWalletsActions } from './../actions';
 
 @Injectable()
 export class WalletsEffects {

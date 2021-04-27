@@ -1,12 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { Column } from 'src/app/shared/components/table/table.models';
+import { Wallet } from '../wallets/wallets.models';
+import { Column } from './../../shared/components/table/table.models';
 import { ApiResponse } from './../../shared/models/response.models';
+import { fromTransactionsActions } from './../../store/actions';
+import { fromTransactionsSelectors, fromWalletsSelectors } from './../../store/selectors';
+import { RootState } from './../../store/states';
 import { NewTransactionDialogComponent } from './new-transaction-dialog/new-transaction-dialog.component';
 import { TransactionLiteral } from './transactions.literals';
 import { Transaction } from './transactions.models';
-import { TransactionsService } from './transactions.service';
 
 @Component({
   selector: 'app-transactions',
@@ -26,18 +30,27 @@ export class TransactionsComponent implements OnInit, OnDestroy {
     { id: 'comment', label: TransactionLiteral.comment }
   ];
   public readonly literal = TransactionLiteral;
-  private subscriptions: Subscription[] = [];
+  private transactionsSubscription: Subscription;
+  private selectedWallet: Wallet;
 
   constructor(
     public dialog: MatDialog,
-    private transactionService: TransactionsService
+    private store: Store<RootState>
   ) { }
 
   ngOnInit(): void {
-    this.subscriptions.push(this.transactionService.getTransactionsByWallet('6086b02c570efe822e9e8e4b')
-      .subscribe((response: ApiResponse<Transaction[]>) => {
-        this.transactions = [...response.body];
-      })
+    this.transactionsSubscription =
+      this.store.pipe(select(fromWalletsSelectors.selectSelectedWalled))
+        .subscribe((selectedWallet: Wallet) => {
+          this.selectedWallet = selectedWallet;
+          if (!!selectedWallet) {
+            this.store.dispatch(fromTransactionsActions.getTransactionsByWalletId({ walletId: selectedWallet.id }));
+          }
+        });
+
+    this.transactionsSubscription.add(
+      this.store.pipe(select(fromTransactionsSelectors.selectAllTransactions))
+        .subscribe((transactionList: Transaction[]) => this.transactions = transactionList)
     );
   }
 
@@ -49,27 +62,27 @@ export class TransactionsComponent implements OnInit, OnDestroy {
         fromBalance: 245.35
       }
     });
-    this.subscriptions.push(
+    this.transactionsSubscription.add(
       dialogRef.afterClosed().subscribe((transaction: Transaction) => {
         if (!!transaction) {
-          this.subscriptions.push(
-            this.transactionService.newTransaction(transaction)
-              .subscribe((response: ApiResponse<Transaction>) => {
-                if (!!transaction) {
-                  this.transactions.push(response.body);
-                }
-              },
-                error => console.error(error)
-              )
-          );
+          // this.transactionsSubscription.add(
+          //   this.transactionService.newTransaction(transaction)
+          //     .subscribe((response: ApiResponse<Transaction>) => {
+          //       if (!!transaction) {
+          //         this.transactions.push(response.body);
+          //       }
+          //     },
+          //       error => console.error(error)
+          //     )
+          // );
         }
       })
     );
   }
 
   ngOnDestroy(): void {
-    if (!!this.subscriptions) {
-      this.subscriptions.forEach(subscription => subscription.unsubscribe());
+    if (!!this.transactionsSubscription) {
+      this.transactionsSubscription.unsubscribe();
     }
   }
 

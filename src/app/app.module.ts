@@ -10,7 +10,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { DevStoreModule } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { fromUsersEffects, fromWalletsEffects } from './store/effects';
+import { fromTransactionsEffects, fromUsersEffects, fromWalletsEffects } from './store/effects';
 import { reducers } from './store/reducers';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -26,6 +26,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     BrowserAnimationsModule,
     BrowserModule,
     EffectsModule.forRoot([
+      fromTransactionsEffects.TransactionsEffects,
       fromUsersEffects.UsersEffects,
       fromWalletsEffects.WalletsEffects
     ]),

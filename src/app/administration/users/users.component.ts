@@ -33,8 +33,9 @@ export class UsersComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.store.dispatch(fromUsersActions.getAllUsers());
 
-    this.usersSubscription = this.store.pipe(select(fromUsersSelectors.selectAllUsers))
-      .subscribe((userList: User[]) => this.users = userList);
+    this.usersSubscription =
+      this.store.pipe(select(fromUsersSelectors.selectAllUsers))
+        .subscribe((userList: User[]) => this.users = userList);
   }
 
   onRowSelected($SelectedUser: User): void {
