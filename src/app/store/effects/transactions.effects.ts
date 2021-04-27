@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { fromTransactionsActions } from '../actions';
+import { RootState } from '../states';
 import { Transaction } from './../../administration/transactions/transactions.models';
 import { TransactionsService } from './../../administration/transactions/transactions.service';
 import { ApiResponse } from './../../shared/models/response.models';
@@ -12,6 +14,7 @@ export class TransactionsEffects {
 
   constructor(
     private actions$: Actions,
+    private store: Store<RootState>,
     private transactionsService: TransactionsService
   ) { }
 
@@ -23,6 +26,7 @@ export class TransactionsEffects {
       )),
       catchError(() => {
         // TODO show notification error
+        this.store.dispatch(fromTransactionsActions.resetState());
         return of(fromTransactionsActions.getTransactionsByWalletIdFailed());
       })
     )

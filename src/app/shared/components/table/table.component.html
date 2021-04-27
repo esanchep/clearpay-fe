@@ -2,7 +2,8 @@
     <ng-content select="[tableToolbarButton]"></ng-content>
 </div>
 
-<div class="table-content mat-elevation-z8" [class.table-with-toolbar]="showToolbar">
+<!-- <div class="table-content mat-elevation-z8" [class.table-with-toolbar]="showToolbar"> -->
+<div class="table-content mat-elevation-z8">
   <table mat-table [dataSource]="data" class="table">
     <ng-container *ngFor="let column of columnList" [matColumnDef]="column.id">
       <th mat-header-cell *matHeaderCellDef>{{column.label | translate | uppercase}}</th>
@@ -18,8 +19,8 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="getDisplayedColumns(); sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: getDisplayedColumns(); index as i" (click)="onRowClick({ index: i, data: row})"
-      [class.selected-row]="isSelectedRow(i)">
+    <tr mat-row *matRowDef="let row; columns: getDisplayedColumns(); index as i" (click)="onRowClick(row)"
+      [class.selected-row]="isSelectedRow(row)">
     </tr>
   </table>
 </div>

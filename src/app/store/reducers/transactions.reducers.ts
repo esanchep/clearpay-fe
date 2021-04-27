@@ -9,6 +9,7 @@ export const INITIAL_TRANSACTIONS_STATE: TransactionsState = undefined;
 const transactionsReducer = createReducer(
   INITIAL_TRANSACTIONS_STATE,
   on(
+    fromTransactionsActions.resetState,
     fromTransactionsActions.getTransactionsByWalletId,
     fromTransactionsActions.getTransactionsByWalletIdFailed,
     () => INITIAL_TRANSACTIONS_STATE
@@ -18,6 +19,17 @@ const transactionsReducer = createReducer(
     (state: TransactionsState, data: ApiResponse<Transaction[]>) => ({
       transactionList: data.body
     })
+  ),
+  on(
+    fromTransactionsActions.addTransactionToList,
+    (state: TransactionsState, data: Transaction) => {
+      const updatedList = [...state.transactionList];
+      updatedList.unshift(data);
+      return {
+        ...state,
+        transactionList: updatedList
+      };
+    }
   )
 );
 

@@ -1,6 +1,10 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { select, Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+import { fromNewTransactionSelectors } from './../../../store/selectors';
+import { RootState } from './../../../store/states';
+import { NewTransactionState } from './../../../store/states/new-transaction.state';
 import { Transaction } from './../transactions.models';
 import { NewTransactionDialogInputData } from './new-transaction-dialog-models';
 import { NewTransactionLiteral } from './new-transaction-dialog.literals';
@@ -13,40 +17,35 @@ import { NewTransactionLiteral } from './new-transaction-dialog.literals';
 export class NewTransactionDialogComponent implements OnInit {
   public form: FormGroup;
   public literal = NewTransactionLiteral;
-  private initialData: NewTransactionDialogInputData;
+  private newTransactionSubscription: Subscription;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) data: NewTransactionDialogInputData,
-    private formBuilder: FormBuilder
-  ) {
-    this.initialData = data;
-    this.buildForm(data);
-    this.mockData(); // TODO remove when store implemented
+    private formBuilder: FormBuilder,
+    private store: Store<RootState>
+  ) { }
+
+  ngOnInit(): void {
+    this.newTransactionSubscription = this.store.pipe(select(fromNewTransactionSelectors.selectNewTransaction))
+      .subscribe((newTransaction: NewTransactionState) => {
+        this.buildForm(newTransaction);
+        this.initFormState();
+      });
+
+    this.updateBalances();
   }
 
-
-  private buildForm(data: NewTransactionDialogInputData): void {
+  private buildForm(data: NewTransactionState): void {
     this.form = this.formBuilder.group({
-      fromUserId: [data.fromUserId],
-      fromUsername: [data.fromUsername],
-      fromWalletId: [data.fromWalletId],
-      fromWalletName: [data.fromWalletName],
-      fromBalance: [data.fromBalance, Validators.min(0)],
+      fromUserId: [data.sourceUser.id],
+      fromUsername: [data.sourceUser.username],
+      fromWalletId: [data.sourceWallet.id],
+      fromWalletName: [data.sourceWallet.alias],
+      fromBalance: [data.sourceWallet.balance, Validators.min(0)],
       amount: [0, [Validators.required, Validators.min(0.1)]],
       toUser: [undefined, Validators.required],
       toWallet: [undefined, Validators.required],
       toBalance: [undefined]
     });
-  }
-
-  private mockData(): void {
-    this.form.get('fromUsername').setValue('terminator');
-    this.form.get('fromWalletName').setValue('wallet_1');
-  }
-
-  ngOnInit(): void {
-    this.initFormState();
-    this.updateBalances();
   }
 
   private initFormState(): void {

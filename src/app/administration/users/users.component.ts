@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { Column } from 'src/app/shared/components/table/table.models';
-import { fromUsersActions } from 'src/app/store/actions';
-import { fromUsersSelectors } from 'src/app/store/selectors';
-import { RootState } from 'src/app/store/states';
+import { Column } from './../../shared/components/table/table.models';
+import { fromNewTransactionActions, fromTransactionsActions, fromUsersActions, fromWalletsActions } from './../../store/actions';
+import { fromUsersSelectors } from './../../store/selectors';
+import { RootState } from './../../store/states';
 import { UserLiteral } from './users.literals';
 import { User } from './users.models';
 
@@ -24,6 +24,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     { id: 'surname', label: UserLiteral.surname }
   ];
   public literal = UserLiteral;
+  public selectedUser: User;
   private usersSubscription: Subscription;
 
   constructor(
@@ -35,11 +36,23 @@ export class UsersComponent implements OnInit, OnDestroy {
 
     this.usersSubscription =
       this.store.pipe(select(fromUsersSelectors.selectAllUsers))
-        .subscribe((userList: User[]) => this.users = userList);
+        .subscribe((userList: User[]) => {
+          this.selectedUser = undefined;
+          this.users = userList;
+          this.resetWalletsAndTransactionsStates();
+        });
   }
 
   onRowSelected($SelectedUser: User): void {
+    this.selectedUser = $SelectedUser;
+    this.resetWalletsAndTransactionsStates();
     this.store.dispatch(fromUsersActions.setSelectedUser($SelectedUser));
+    this.store.dispatch(fromNewTransactionActions.setSourceUser($SelectedUser));
+  }
+
+  private resetWalletsAndTransactionsStates(): void {
+    this.store.dispatch(fromWalletsActions.resetState());
+    this.store.dispatch(fromTransactionsActions.resetState());
   }
 
   ngOnDestroy(): void {

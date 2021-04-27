@@ -1,10 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { Column } from 'src/app/shared/components/table/table.models';
-import { fromWalletsActions } from './../../store/actions';
+import { Column } from './../../shared/components/table/table.models';
+import { fromNewTransactionActions, fromTransactionsActions, fromWalletsActions } from './../../store/actions';
 import { fromUsersSelectors, fromWalletsSelectors } from './../../store/selectors';
 import { RootState } from './../../store/states/root.state';
+import { NewTransactionDialogComponent } from './../transactions/new-transaction-dialog/new-transaction-dialog.component';
+import { Transaction } from './../transactions/transactions.models';
 import { User } from './../users/users.models';
 import { WalletLiteral } from './wallets.literals';
 import { Wallet } from './wallets.models';
@@ -24,14 +27,21 @@ export class WalletsComponent implements OnInit, OnDestroy {
     { id: 'balance', label: WalletLiteral.balance },
   ];
   public literal = WalletLiteral;
+  public selectedWallet: Wallet;
+  public selectedUser: User;
   private walletsSubscription: Subscription;
 
-  constructor(private store: Store<RootState>) { }
+  constructor(
+    public dialog: MatDialog,
+    private store: Store<RootState>
+  ) { }
 
   ngOnInit(): void {
     this.walletsSubscription =
       this.store.pipe(select(fromUsersSelectors.selectSelectedUser))
         .subscribe((selectedUser: User) => {
+          this.selectedWallet = undefined;
+          this.selectedUser = selectedUser;
           if (!!selectedUser) {
             this.store.dispatch(fromWalletsActions.getWalletsByUserId({ userId: selectedUser.id }));
           }
@@ -44,7 +54,19 @@ export class WalletsComponent implements OnInit, OnDestroy {
   }
 
   onRowSelected($selectedWallet: Wallet): void {
+    this.selectedWallet = $selectedWallet;
+    this.store.dispatch(fromTransactionsActions.resetState());
     this.store.dispatch(fromWalletsActions.setSelectedWallet($selectedWallet));
+    this.store.dispatch(fromNewTransactionActions.setSourceWallet($selectedWallet));
+  }
+
+  onNewTransaction(): void {
+    const dialogRef = this.dialog.open(NewTransactionDialogComponent);
+    dialogRef.afterClosed().subscribe((newTransaction: Transaction) => {
+      if (!!newTransaction) {
+        this.store.dispatch(fromNewTransactionActions.addNewTransaction(newTransaction));
+      }
+    }).unsubscribe();
   }
 
   ngOnDestroy(): void {

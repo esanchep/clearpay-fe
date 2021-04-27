@@ -9,6 +9,7 @@ export const INITIAL_USERS_STATE: UsersState = undefined;
 const usersReducer = createReducer(
   INITIAL_USERS_STATE,
   on(
+    fromUsersActions.resetState,
     fromUsersActions.getAllUsers,
     fromUsersActions.getAllUsersFailed,
     () => INITIAL_USERS_STATE

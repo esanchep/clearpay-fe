@@ -6,7 +6,6 @@ const TRANSACTIONS = Literal.administration.transactions;
 export const TransactionLiteral = {
   amount: COMMON.amount,
   comment: COMMON.comment,
-  newTransaction: COMMON.newTransaction,
   sourceWallet: TRANSACTIONS.sourceWallet,
   destinationWallet: TRANSACTIONS.destinationWallet,
   title: TRANSACTIONS.title,

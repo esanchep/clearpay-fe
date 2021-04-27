@@ -1,5 +1,11 @@
 <h2>{{literal.title | translate}}</h2>
 
 <div class="section-content">
-  <app-table [data]="wallets" [columns]="columns" (selectedRow)="onRowSelected($event)"></app-table>
+  <app-table [data]="wallets" [columns]="columns" [showToolbar]="true" [selectedRow]="selectedWallet"
+    (selectedRowChange)="onRowSelected($event)">
+    <button mat-raised-button tableToolbarButton color="primary" (click)="onNewTransaction()"
+      [disabled]="!selectedUser">
+      {{literal.newTransaction | translate}}
+    </button>
+  </app-table>
 </div>

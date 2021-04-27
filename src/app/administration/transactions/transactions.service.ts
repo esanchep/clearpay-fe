@@ -15,7 +15,7 @@ export class TransactionsService {
     return this.http.get<ApiResponse<Transaction[]>>(`/wallet/${walletId}/transactions`);
   }
 
-  newTransaction(request: Transaction): Observable<ApiResponse<Transaction>> {
+  addNewTransaction(request: Transaction): Observable<ApiResponse<Transaction>> {
     return this.http.post<ApiResponse<Transaction>>(`/wallet/${request.sourceWalletId}/transactions`, request);
   }
 }

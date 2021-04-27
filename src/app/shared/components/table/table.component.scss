@@ -7,9 +7,13 @@ $table-toolbar-height: 36px;
   padding-bottom: 20px;
 }
 
-.table-with-toolbar {
-  height: calc(100% - #{$table-toolbar-height}) !important;
+.table-toolbar {
+  margin-top: -56px;
 }
+
+// .table-with-toolbar {
+//   height: calc(100% - #{$table-toolbar-height}) !important;
+// }
 
 .table-content {
   width: 100%;

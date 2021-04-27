@@ -9,6 +9,7 @@ export const INITIAL_WALLETS_STATE: WalletsState = undefined;
 const walletsReducer = createReducer(
   INITIAL_WALLETS_STATE,
   on(
+    fromWalletsActions.resetState,
     fromWalletsActions.getWalletsByUserId,
     fromWalletsActions.getWalletsByUserIdFailed,
     () => INITIAL_WALLETS_STATE

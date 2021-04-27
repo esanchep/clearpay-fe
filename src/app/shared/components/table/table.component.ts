@@ -13,10 +13,10 @@ export class TableComponent implements OnInit {
     this.columnList = columnList;
   }
   @Input() showToolbar = false;
-  @Output() selectedRow = new EventEmitter<TableEntity>();
+  @Input() selectedRow: TableEntity;
+  @Output() selectedRowChange = new EventEmitter<TableEntity>();
   public filter: string;
   public columnList: Column[];
-  private selectedRowIndex: number;
 
   constructor(
     private currencyPipe: CurrencyPipe,
@@ -46,13 +46,12 @@ export class TableComponent implements OnInit {
     return this.datePipe.transform(data, 'longDate');
   }
 
-  onRowClick(row: Row): void {
-    this.selectedRowIndex = row.index;
-    this.selectedRow.emit(row.data);
+  onRowClick($row: TableEntity): void {
+    this.selectedRowChange.emit($row);
   }
 
-  isSelectedRow(index: number): boolean {
-    return this.selectedRowIndex === index;
+  isSelectedRow($row: TableEntity): boolean {
+    return this.selectedRow?.id === $row?.id;
   }
 
 }
