@@ -4,7 +4,7 @@
   <app-table [data]="wallets" [columns]="columns" [showToolbar]="true" [selectedRow]="selectedWallet"
     (selectedRowChange)="onRowSelected($event)">
     <button mat-raised-button tableToolbarButton color="primary" (click)="onNewTransaction()"
-      [disabled]="!selectedUser">
+      [disabled]="!(selectedUser && selectedWallet)">
       {{literal.newTransaction | translate}}
     </button>
   </app-table>
