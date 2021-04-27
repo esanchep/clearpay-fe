@@ -21,6 +21,7 @@
       true,
       "rxjs/Rx"
     ],
+    "ordered-imports": true,
     "import-spacing": true,
     "indent": {
       "options": [
@@ -49,7 +50,8 @@
       "info",
       "time",
       "timeEnd",
-      "trace"
+      "trace",
+      "log"
     ],
     "no-empty": false,
     "no-inferrable-types": [
