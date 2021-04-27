@@ -4,8 +4,8 @@ import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { User } from 'src/app/administration/users/users.models';
 import { UsersService } from './../../administration/users/users.service';
-import { fromUsersActions } from './../actions';
 import { ApiResponse } from './../../shared/models/response.models';
+import { fromUsersActions } from './../actions';
 
 @Injectable()
 export class UsersEffects {
