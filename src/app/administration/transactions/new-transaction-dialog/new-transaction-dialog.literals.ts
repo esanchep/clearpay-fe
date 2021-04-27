@@ -11,8 +11,6 @@ export const NewTransactionLiteral = {
   to: COMMON.to,
   user: NEW_TRANSACTION.user,
   wallet: NEW_TRANSACTION.wallet,
-  destinationUser: NEW_TRANSACTION.destinationUser,
-  destinationWallet: NEW_TRANSACTION.destinationWallet,
   fieldRequired: NEW_TRANSACTION.fieldRequired,
   invalidAmount: NEW_TRANSACTION.invalidAmount,
   cancel: NEW_TRANSACTION.cancel,

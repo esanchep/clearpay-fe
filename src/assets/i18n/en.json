@@ -7,7 +7,8 @@
     "new-transaction": "New transaction",
     "from": "From",
     "amount": "Amount",
-    "to": "To"
+    "to": "To",
+    "comment": "Comment"
   },
   "administration": {
     "title": "Administration panel",
@@ -19,18 +20,17 @@
     },
     "wallets": {
       "title": "Wallets",
-      "wallet-name": "Wallet name"
+      "alias": "Alias"
     },
     "transactions": {
       "title": "Latest transactions",
-      "new-transaction": "New transaction",
-      "date": "Date"
+      "date": "Date",
+      "sourceWallet": "Source Wallet",
+      "destinationWallet": "Destination Wallet"
     },
     "new-transaction": {
       "user": "User",
       "wallet": "Wallet",
-      "destination-user": "Destination User",
-      "destination-wallet": "Destination Wallet",
       "cancel": "Cancel",
       "add": "Add",
       "field-required": "This field is required",

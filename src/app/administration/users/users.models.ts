@@ -4,7 +4,3 @@ export interface User {
   name: string;
   surname: string;
 }
-
-export interface GetUsersResponse {
-  users: User[];
-}

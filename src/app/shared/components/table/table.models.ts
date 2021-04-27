@@ -8,3 +8,8 @@ export interface Row {
   index: number;
   data: TableEntity;
 }
+
+export interface Column {
+  id: string;
+  label: string
+}

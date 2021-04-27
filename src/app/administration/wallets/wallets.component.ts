@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Column } from 'src/app/shared/components/table/table.models';
+import { Response } from '../../shared/models/response.models';
 import { WalletLiteral } from './wallets.literals';
-import { GetWalletsResponse, Wallet } from './wallets.models';
+import { Wallet } from './wallets.models';
 import { WalletService } from './wallets.service';
 
 @Component({
@@ -14,17 +16,19 @@ import { WalletService } from './wallets.service';
 })
 export class WalletsComponent implements OnInit {
   public wallets: Wallet[];
-  public displayedColumns = ['walletName', 'balance'];
+  public columns: Column[] = [
+    { id: 'alias', label: WalletLiteral.alias },
+    { id: 'balance', label: WalletLiteral.balance },
+  ];
   public literal = WalletLiteral;
-  public filter = "";
   private walletsSubscription: Subscription;
 
   constructor(private walletService: WalletService) { }
 
   ngOnInit(): void {
-    this.walletsSubscription = this.walletService.getAllWallets()
-      .subscribe((response: GetWalletsResponse) => {
-        this.wallets = [...response.wallets];
+    this.walletsSubscription = this.walletService.getWalletsByUserId('6086b02c570efe822e9e8e44')
+      .subscribe((response: Response<Wallet[]>) => {
+        this.wallets = [...response.body];
       });
   }
 

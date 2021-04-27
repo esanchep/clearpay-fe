@@ -1,6 +1,6 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Row, TableEntity } from './table.models';
+import { Column, Row, TableEntity } from './table.models';
 
 @Component({
   selector: 'app-table',
@@ -9,9 +9,13 @@ import { Row, TableEntity } from './table.models';
 })
 export class TableComponent implements OnInit {
   @Input() data: TableEntity[];
-  @Input() displayedColumns: string[];
+  @Input() set columns(columnList: Column[]) {
+    this.columnList = columnList;
+  }
+  @Input() showToolbar: boolean = false;
   @Output() selectedRow = new EventEmitter<TableEntity>();
   public filter: string;
+  public columnList: Column[];
   private selectedRowIndex: number;
 
   constructor(
@@ -22,8 +26,8 @@ export class TableComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onFilter(): void {
-    // TODO
+  getDisplayedColumns(): string[] {
+    return this.columnList?.map((column: Column) => column.id);
   }
 
   isNumber(data: any): boolean {
@@ -35,7 +39,7 @@ export class TableComponent implements OnInit {
   }
 
   isDate(data: any): boolean {
-    return data instanceof Date;
+    return data instanceof Date || !!Date.parse(data);
   }
 
   formatDate(data: Date): string {

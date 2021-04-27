@@ -1,9 +1,11 @@
-import { NewTransactionDialogComponent } from './new-transaction-dialog/new-transaction-dialog.component';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
+import { Column } from 'src/app/shared/components/table/table.models';
+import { Response } from '../../shared/models/response.models';
+import { NewTransactionDialogComponent } from './new-transaction-dialog/new-transaction-dialog.component';
 import { TransactionLiteral } from './transactions.literals';
-import { GetTransactionsResponse, NewTransactionRequest, Transaction } from './transactions.models';
+import { Transaction } from './transactions.models';
 import { TransactionService } from './transactions.service';
 
 @Component({
@@ -16,9 +18,14 @@ import { TransactionService } from './transactions.service';
 })
 export class TransactionsComponent implements OnInit {
   public transactions: Transaction[];
-  public displayedColumns = ['from', 'to', 'amount', 'date', 'balance'];
-  public literal = TransactionLiteral;
-  public filter = "";
+  public columns: Column[] = [
+    { id: 'sourceWalletId', label: TransactionLiteral.sourceWallet },
+    { id: 'destinationWalletId', label: TransactionLiteral.destinationWallet },
+    { id: 'amount', label: TransactionLiteral.amount },
+    { id: 'date', label: TransactionLiteral.date },
+    { id: 'comment', label: TransactionLiteral.comment }
+  ];
+  public readonly literal = TransactionLiteral;
   private subscriptions: Subscription[] = [];
 
   constructor(
@@ -27,9 +34,9 @@ export class TransactionsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.subscriptions.push(this.transactionService.getTransactionsByWallet({ walletId: '2' })
-      .subscribe((response: GetTransactionsResponse) => {
-        this.transactions = [...response.transactions];
+    this.subscriptions.push(this.transactionService.getTransactionsByWallet('6086b02c570efe822e9e8e4b')
+      .subscribe((response: Response<Transaction[]>) => {
+        this.transactions = [...response.body];
       })
     );
   }
@@ -43,17 +50,17 @@ export class TransactionsComponent implements OnInit {
       }
     });
     this.subscriptions.push(
-      dialogRef.afterClosed().subscribe((transaction: NewTransactionRequest) => {
+      dialogRef.afterClosed().subscribe((transaction: Transaction) => {
         if (!!transaction) {
           this.subscriptions.push(
-            this.transactionService.newTransaction(transaction).subscribe(
-              result => {
+            this.transactionService.newTransaction(transaction)
+              .subscribe((response: Response<Transaction>) => {
                 if (!!transaction) {
-                  this.transactions = [...result.transactions]
+                  this.transactions.push(response.body);
                 }
               },
-              error => console.error(error)
-            )
+                error => console.error(error)
+              )
           );
         }
       })

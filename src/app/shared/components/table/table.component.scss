@@ -1,23 +1,19 @@
-$filterHeight: 56.563px;
+$table-toolbar-height: 36px;
 
 .table-toolbar {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  margin-top: -20px;
+  padding-bottom: 20px;
+}
 
-  .table-filter {
-    width: 50%;
-    max-width: 500px;
-  }
-
-  .table-toolbar-extra-content {
-    display: block;
-    height: 36px;
-  }
+.table-with-toolbar {
+  height: calc(100% - #{$table-toolbar-height}) !important;
 }
 
 .table-content {
   width: 100%;
-  height: calc(100% - #{$filterHeight});
+  height: 100%;
   overflow-y: auto;
   background-color: #efefef;
 

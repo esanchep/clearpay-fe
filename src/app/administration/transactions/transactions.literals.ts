@@ -4,11 +4,11 @@ const COMMON = Literal.common;
 const TRANSACTIONS = Literal.administration.transactions;
 
 export const TransactionLiteral = {
-  to: COMMON.to,
-  from: COMMON.from,
   amount: COMMON.amount,
-  balance: COMMON.balance,
+  comment: COMMON.comment,
   newTransaction: COMMON.newTransaction,
+  sourceWallet: TRANSACTIONS.sourceWallet,
+  destinationWallet: TRANSACTIONS.destinationWallet,
   title: TRANSACTIONS.title,
   date: TRANSACTIONS.date
 };

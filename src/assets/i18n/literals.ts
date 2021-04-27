@@ -7,7 +7,8 @@ export const Literal = {
     balance: 'common.balance',
     from: 'common.from',
     amount: 'common.amount',
-    to: 'administration.transactions.to'
+    to: 'common.to',
+    comment: 'common.comment'
   },
   administration: {
     title: 'administration.title',
@@ -19,17 +20,17 @@ export const Literal = {
     },
     wallets: {
       title: 'administration.wallets.title',
-      walletName: 'administration.wallets.wallet-name'
+      alias: 'administration.wallets.alias'
     },
     transactions: {
       title: 'administration.transactions.title',
-      date: 'administration.transactions.date'
+      date: 'administration.transactions.date',
+      sourceWallet: 'administration.transactions.sourceWallet',
+      destinationWallet: 'administration.transactions.destinationWallet',
     },
     newTransaction: {
       user: 'administration.new-transaction.user',
       wallet: 'administration.new-transaction.wallet',
-      destinationUser: 'administration.new-transaction.destination-user',
-      destinationWallet: 'administration.new-transaction.destination-wallet',
       cancel: 'administration.new-transaction.cancel',
       add: 'administration.new-transaction.add',
       fieldRequired: 'administration.new-transaction.field-required',

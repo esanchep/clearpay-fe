@@ -1,9 +1,6 @@
 export interface Wallet {
   id: string;
-  walletName: string;
+  userId: string;
+  alias: string;
   balance: number;
-}
-
-export interface GetWalletsResponse {
-  wallets: Wallet[];
 }

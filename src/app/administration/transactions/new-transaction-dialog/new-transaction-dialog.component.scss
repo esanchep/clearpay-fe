@@ -9,11 +9,16 @@
     .form-item {
       width: 225px;
       margin-bottom: 10px;
+
+      .overflow-error-text {
+        display: contents;
+        white-space: nowrap;
+      }
     }
   }
 
   .from-wallet {
-    padding-right: 100px;
+    padding-right: 150px;
     position: relative;
 
     .amount {
@@ -33,7 +38,7 @@
       }
 
       .mat-form-field {
-        width: 100px;
+        width: 150px;
         background-color: white;
       }
 
@@ -47,7 +52,3 @@
     padding-left: 100px;
   }
 }
-
-// ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
-//   background-color: white;
-// }

@@ -31,7 +31,7 @@ export class NewTransactionDialogComponent implements OnInit {
       fromWalletId: [data.fromWalletId],
       fromWalletName: [data.fromWalletName],
       fromBalance: [data.fromBalance, Validators.min(0)],
-      amount: [0, [Validators.required, Validators.min(0.1)]],
+      amount: [0.1, [Validators.required, Validators.min(0.1)]],
       toUser: [undefined, Validators.required],
       toWallet: [undefined, Validators.required],
       toBalance: [undefined]

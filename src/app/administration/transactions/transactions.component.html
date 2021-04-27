@@ -1,7 +1,7 @@
 <h2>{{literal.title | translate}}</h2>
 
 <div class="section-content">
-  <app-table [data]="transactions" [displayedColumns]="displayedColumns">
+  <app-table [data]="transactions" [columns]="columns" [showToolbar]="true">
     <button mat-raised-button tableToolbarButton color="primary" (click)="onNewTransaction()">
       {{literal.newTransaction | translate}}
     </button>

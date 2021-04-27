@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Column } from 'src/app/shared/components/table/table.models';
+import { Response } from '../../shared/models/response.models';
 import { UserLiteral } from './users.literals';
-import { GetUsersResponse as GetUsersResponse, User } from './users.models';
+import { User } from './users.models';
 import { UsersService } from './users.service';
 
 @Component({
@@ -14,7 +16,11 @@ import { UsersService } from './users.service';
 })
 export class UsersComponent implements OnInit, OnDestroy {
   public users: User[];
-  public displayedColumns = ['username', 'name', 'surname'];
+  public columns: Column[] = [
+    { id: 'username', label: UserLiteral.username },
+    { id: 'name', label: UserLiteral.name },
+    { id: 'surname', label: UserLiteral.surname }
+  ];
   public literal = UserLiteral;
   private usersSubscription: Subscription;
 
@@ -22,8 +28,8 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.usersSubscription = this.userService.getAllUsers()
-      .subscribe((response: GetUsersResponse) => {
-        this.users = [...response.users];
+      .subscribe((response: Response<User[]>) => {
+        this.users = [...response.body];
       });
   }
 

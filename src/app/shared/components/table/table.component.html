@@ -1,33 +1,26 @@
-<div class="table-toolbar">
-  <mat-form-field class="table-filter">
-    <mat-label>Filter</mat-label>
-    <input matInput type="text" [(ngModel)]="filter" (keyup)="onFilter()" />
-    <button mat-button *ngIf="filter" matSuffix mat-icon-button aria-label="Clear" (click)="filter=''">
-      <mat-icon>close</mat-icon>
-    </button>
-  </mat-form-field>
-  <div class="table-toolbar-extra-content">
+<!-- TODO remove filter and recalculate CSS heights -->
+<div class="table-toolbar" *ngIf="showToolbar">
     <ng-content select="[tableToolbarButton]"></ng-content>
-  </div>
 </div>
 
-<div class="table-content mat-elevation-z8">
+<div class="table-content mat-elevation-z8" [class.table-with-toolbar]="showToolbar">
+  <!-- TODO create a Column interface like { id: string; literal: string } -->
   <table mat-table [dataSource]="data" class="table">
-    <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
-      <th mat-header-cell *matHeaderCellDef>{{column | translate | uppercase}}</th>
+    <ng-container *ngFor="let column of columnList" [matColumnDef]="column.id">
+      <th mat-header-cell *matHeaderCellDef>{{column.label | translate | uppercase}}</th>
       <td mat-cell *matCellDef="let element">
         {{
-          isNumber(element[column]) ?
-            formatAmount(element[column]) :
-            isDate(element[column]) ?
-              formatDate(element[column]) :
-              (element[column])
+          isNumber(element[column.id]) ?
+            formatAmount(element[column.id]) :
+            isDate(element[column.id]) ?
+              formatDate(element[column.id]) :
+              (element[column.id])
         }}
       </td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns; index as i" (click)="onRowClick({ index: i, data: row})"
+    <tr mat-header-row *matHeaderRowDef="getDisplayedColumns(); sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: getDisplayedColumns(); index as i" (click)="onRowClick({ index: i, data: row})"
       [class.selected-row]="isSelectedRow(i)">
     </tr>
   </table>
