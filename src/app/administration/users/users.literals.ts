@@ -1,4 +1,4 @@
-import { Literal } from "src/assets/i18n/literals";
+import { Literal } from 'src/assets/i18n/literals';
 
 export const UserLiteral = {
   title: Literal.administration.users.title,

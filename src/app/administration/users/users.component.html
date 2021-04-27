@@ -1,5 +1,5 @@
 <h2>{{literal.title | translate}}</h2>
 
 <div class="section-content">
-  <app-table [data]="users" [columns]="columns"></app-table>
+  <app-table [data]="users" [columns]="columns" (selectedRow)="onRowSelected($event)"></app-table>
 </div>

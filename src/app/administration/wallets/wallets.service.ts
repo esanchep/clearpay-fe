@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Response } from '../../shared/models/response.models';
+import { ApiResponse } from '../../shared/models/response.models';
 import { Wallet } from './wallets.models';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class WalletService {
 
   constructor(private http: HttpClient) { }
 
-  getWalletsByUserId(userId: string): Observable<Response<Wallet[]>> {
-    return this.http.get<Response<Wallet[]>>(`/user/${userId}/wallets`);
+  getWalletsByUserId(userId: string): Observable<ApiResponse<Wallet[]>> {
+    return this.http.get<ApiResponse<Wallet[]>>(`/user/${userId}/wallets`);
   }
 }

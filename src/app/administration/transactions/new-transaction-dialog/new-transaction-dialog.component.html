@@ -19,7 +19,7 @@
         <mat-icon class="pre-input">arrow_right_alt</mat-icon>
         <mat-form-field class="form-item" appearance="outline">
           <mat-label>{{literal.amount | translate}}</mat-label>
-          <input matInput type="number" formControlName="amount">
+          <input matInput type="number" formControlName="amount" (input)="updateBalances()">
           <mat-icon matSuffix> attach_money</mat-icon>
           <mat-error *ngIf="form.get('amount').hasError('required')">
             {{literal.fieldRequired | translate}}
@@ -41,7 +41,7 @@
       <!-- TO USER -->
       <mat-form-field class="form-item" appearance="outline">
         <mat-label>{{literal.user | translate}}</mat-label>
-        <input matInput type="text" formControlName="toUser">
+        <input matInput type="text" formControlName="toUser" (change)="setAmountFieldEditable()">
         <mat-error *ngIf="form.get('toUser').hasError('required')">
           {{literal.fieldRequired | translate}}
         </mat-error>
@@ -49,7 +49,7 @@
       <!-- TO WALLET -->
       <mat-form-field class="form-item" appearance="outline">
         <mat-label>{{literal.wallet | translate}}</mat-label>
-        <input matInput type="text" formControlName="toWallet">
+        <input matInput type="text" formControlName="toWallet" (change)="setAmountFieldEditable()">
         <mat-error *ngIf="form.get('toWallet').hasError('required')">
           {{literal.fieldRequired | translate}}
         </mat-error>
@@ -64,5 +64,5 @@
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-raised-button mat-dialog-close>{{literal.cancel | translate}}</button>
-  <button mat-raised-button color="primary" [mat-dialog-close]="getTransaction()" cdkFocusInitial>{{literal.add | translate}}</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="getTransaction()" [disabled]="!this.form.valid">{{literal.add | translate}}</button>
 </mat-dialog-actions>

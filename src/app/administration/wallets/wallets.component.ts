@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Column } from 'src/app/shared/components/table/table.models';
-import { Response } from '../../shared/models/response.models';
+import { ApiResponse } from '../../shared/models/response.models';
 import { WalletLiteral } from './wallets.literals';
 import { Wallet } from './wallets.models';
 import { WalletService } from './wallets.service';
@@ -14,7 +14,7 @@ import { WalletService } from './wallets.service';
     './wallets.component.scss'
   ]
 })
-export class WalletsComponent implements OnInit {
+export class WalletsComponent implements OnInit, OnDestroy {
   public wallets: Wallet[];
   public columns: Column[] = [
     { id: 'alias', label: WalletLiteral.alias },
@@ -27,7 +27,7 @@ export class WalletsComponent implements OnInit {
 
   ngOnInit(): void {
     this.walletsSubscription = this.walletService.getWalletsByUserId('6086b02c570efe822e9e8e44')
-      .subscribe((response: Response<Wallet[]>) => {
+      .subscribe((response: ApiResponse<Wallet[]>) => {
         this.wallets = [...response.body];
       });
   }

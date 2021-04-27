@@ -1,4 +1,4 @@
-import { Literal } from "src/assets/i18n/literals";
+import { Literal } from 'src/assets/i18n/literals';
 
 const COMMON = Literal.common;
 const TRANSACTIONS = Literal.administration.transactions;

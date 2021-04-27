@@ -34,7 +34,7 @@
       "cancel": "Cancel",
       "add": "Add",
       "field-required": "This field is required",
-      "invalid-amount": "Amount must be a valid number greater than 0"
+      "invalid-amount": "Must be greater than 0"
     }
   }
 }

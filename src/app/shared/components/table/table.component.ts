@@ -12,7 +12,7 @@ export class TableComponent implements OnInit {
   @Input() set columns(columnList: Column[]) {
     this.columnList = columnList;
   }
-  @Input() showToolbar: boolean = false;
+  @Input() showToolbar = false;
   @Output() selectedRow = new EventEmitter<TableEntity>();
   public filter: string;
   public columnList: Column[];

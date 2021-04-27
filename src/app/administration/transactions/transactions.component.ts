@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { Column } from 'src/app/shared/components/table/table.models';
-import { Response } from '../../shared/models/response.models';
+import { ApiResponse } from '../../shared/models/response.models';
 import { NewTransactionDialogComponent } from './new-transaction-dialog/new-transaction-dialog.component';
 import { TransactionLiteral } from './transactions.literals';
 import { Transaction } from './transactions.models';
@@ -16,7 +16,7 @@ import { TransactionService } from './transactions.service';
     './transactions.component.scss'
   ]
 })
-export class TransactionsComponent implements OnInit {
+export class TransactionsComponent implements OnInit, OnDestroy {
   public transactions: Transaction[];
   public columns: Column[] = [
     { id: 'sourceWalletId', label: TransactionLiteral.sourceWallet },
@@ -35,7 +35,7 @@ export class TransactionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscriptions.push(this.transactionService.getTransactionsByWallet('6086b02c570efe822e9e8e4b')
-      .subscribe((response: Response<Transaction[]>) => {
+      .subscribe((response: ApiResponse<Transaction[]>) => {
         this.transactions = [...response.body];
       })
     );
@@ -54,7 +54,7 @@ export class TransactionsComponent implements OnInit {
         if (!!transaction) {
           this.subscriptions.push(
             this.transactionService.newTransaction(transaction)
-              .subscribe((response: Response<Transaction>) => {
+              .subscribe((response: ApiResponse<Transaction>) => {
                 if (!!transaction) {
                   this.transactions.push(response.body);
                 }

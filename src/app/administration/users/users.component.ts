@@ -1,10 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { Column } from 'src/app/shared/components/table/table.models';
-import { Response } from '../../shared/models/response.models';
+import { fromUserActions } from 'src/app/store/actions';
+import { fromUsersSelectors } from 'src/app/store/selectors';
+import { RootState } from 'src/app/store/states';
 import { UserLiteral } from './users.literals';
 import { User } from './users.models';
-import { UsersService } from './users.service';
 
 @Component({
   selector: 'app-users',
@@ -24,13 +26,19 @@ export class UsersComponent implements OnInit, OnDestroy {
   public literal = UserLiteral;
   private usersSubscription: Subscription;
 
-  constructor(private userService: UsersService) { }
+  constructor(
+    private store: Store<RootState>
+  ) { }
 
   ngOnInit(): void {
-    this.usersSubscription = this.userService.getAllUsers()
-      .subscribe((response: Response<User[]>) => {
-        this.users = [...response.body];
-      });
+    this.store.dispatch(fromUserActions.getAllUsers());
+
+    this.usersSubscription = this.store.pipe(select(fromUsersSelectors.selectAllUsers))
+      .subscribe((userList: User[]) => this.users = userList);
+  }
+
+  onRowSelected($userSelected: User): void {
+    this.store.dispatch(fromUserActions.setSelectedUser($userSelected));
   }
 
   ngOnDestroy(): void {
