@@ -66,7 +66,7 @@ export class WalletsComponent implements OnInit, OnDestroy {
       if (!!newTransaction) {
         this.store.dispatch(fromNewTransactionActions.addNewTransaction(newTransaction));
       }
-    }).unsubscribe();
+    });
   }
 
   ngOnDestroy(): void {

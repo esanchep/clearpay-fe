@@ -8,3 +8,8 @@ export const selectNewTransaction = createSelector(
   newTransactionSelectors,
   (state: NewTransactionState) => state
 );
+
+export const selectEligibleDestinationWallets = createSelector(
+  newTransactionSelectors,
+  (state: NewTransactionState) => state?.destinationWallets
+);

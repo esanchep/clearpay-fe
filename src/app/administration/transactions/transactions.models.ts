@@ -3,6 +3,6 @@ export interface Transaction {
   sourceWalletId: string;
   destinationWalletId: string;
   amount: number;
-  date: Date;
+  date?: Date;
   comment?: string;
 }

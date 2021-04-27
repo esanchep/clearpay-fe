@@ -4,17 +4,17 @@
   <div class="new-transaction-content" [formGroup]="form">
     <div class="form from-wallet">
       <h3>{{literal.from | translate}}</h3>
-      <!-- FROM USER -->
+      <!-- SOURCE USER -->
       <mat-form-field class="form-item" appearance="outline">
         <mat-label>{{literal.user | translate}}</mat-label>
-        <input matInput type="text" formControlName="fromUsername">
+        <input matInput type="text" formControlName="sourceUsername">
       </mat-form-field>
-      <!-- FROM WALLET -->
+      <!-- SOURCE WALLET -->
       <mat-form-field class="form-item" appearance="outline">
         <mat-label>{{literal.wallet | translate}}</mat-label>
-        <input matInput type="text" formControlName="fromWalletName">
+        <input matInput type="text" formControlName="sourceWalletName">
       </mat-form-field>
-      <!-- FROM AMOUNT -->
+      <!-- SOURCE AMOUNT -->
       <div class="amount">
         <mat-icon class="pre-input">arrow_right_alt</mat-icon>
         <mat-form-field class="form-item" appearance="outline">
@@ -30,34 +30,38 @@
         </mat-form-field>
         <mat-icon class="post-input">arrow_right_alt</mat-icon>
       </div>
-      <!-- FROM BALANCE -->
+      <!-- SOURCE BALANCE -->
       <mat-form-field class="form-item" appearance="outline">
         <mat-label>{{literal.balance | translate}}</mat-label>
-        <input matInput type="number" formControlName="fromBalance">
+        <input matInput type="number" formControlName="sourceBalance">
       </mat-form-field>
     </div>
     <div class="form to-wallet">
-      <h3>To</h3>
-      <!-- TO USER -->
+      <h3>{{literal.to | translate}}</h3>
+      <!-- DESTINATION USER -->
       <mat-form-field class="form-item" appearance="outline">
         <mat-label>{{literal.user | translate}}</mat-label>
-        <input matInput type="text" formControlName="toUser" (change)="setAmountFieldEditable()">
-        <mat-error *ngIf="form.get('toUser').hasError('required')">
+        <mat-select formControlName="destinationUserId" (selectionChange)="onDestinationUserSelected()">
+          <mat-option *ngFor="let eligibleUser of eligibleDestinationUsers" [value]="eligibleUser.id">{{eligibleUser.username}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('destinationUserId').hasError('required')">
           {{literal.fieldRequired | translate}}
         </mat-error>
       </mat-form-field>
-      <!-- TO WALLET -->
+      <!-- DESTINATION WALLET -->
       <mat-form-field class="form-item" appearance="outline">
         <mat-label>{{literal.wallet | translate}}</mat-label>
-        <input matInput type="text" formControlName="toWallet" (change)="setAmountFieldEditable()">
-        <mat-error *ngIf="form.get('toWallet').hasError('required')">
+        <mat-select formControlName="destinationWallet" (selectionChange)="onDestinationWalletSelected()">
+          <mat-option *ngFor="let eligibleWallet of eligibleDestinationWallets" [value]="eligibleWallet">{{eligibleWallet.alias}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('destinationWallet').hasError('required')">
           {{literal.fieldRequired | translate}}
         </mat-error>
       </mat-form-field>
-      <!-- TO BALANCE -->
+      <!-- DESTINATION BALANCE -->
       <mat-form-field class="form-item" appearance="outline">
         <mat-label>{{literal.balance | translate}}</mat-label>
-        <input matInput type="number" formControlName="toBalance">
+        <input matInput type="number" formControlName="destinationBalance">
       </mat-form-field>
     </div>
   </div>

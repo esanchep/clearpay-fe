@@ -2,6 +2,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 import { fromNewTransactionActions } from '../actions';
 import { User } from './../../administration/users/users.models';
 import { Wallet } from './../../administration/wallets/wallets.models';
+import { ApiResponse } from './../../shared/models/response.models';
 import { NewTransactionState } from './../states/new-transaction.state';
 
 export const INITIAL_NEW_TRANSACTION_STATE: NewTransactionState = undefined;
@@ -32,6 +33,22 @@ const newTransactionReducer = createReducer(
     fromNewTransactionActions.addNewTransaction,
     (state: NewTransactionState) => ({ ...state })
   ),
+  on(
+    fromNewTransactionActions.getDestinationWalletsByUserIdSuccess,
+    (state: NewTransactionState, data: ApiResponse<Wallet[]>) => ({
+      ...state,
+      destinationWallets: data.body
+    })
+  ),
+  on(
+    fromNewTransactionActions.resetDestinationWallets,
+    fromNewTransactionActions.getDestinationWalletsByUserId,
+    fromNewTransactionActions.getDestinationWalletsByUserIdFailed,
+    (state: NewTransactionState) => ({
+      ...state,
+      destinationWallets: undefined
+    })
+  )
 );
 
 export function reducer(state: NewTransactionState, action: Action): NewTransactionState {

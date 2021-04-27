@@ -1,8 +1,8 @@
 export interface NewTransactionDialogInputData {
-  fromUserId: string;
-  fromUsername: string;
-  fromWalletId: string;
-  fromWalletName: string;
-  fromBalance: number;
+  sourceUserId: string;
+  sourceUsername: string;
+  sourceWalletId: string;
+  sourceWalletName: string;
+  sourceBalance: number;
   amount: number;
 }

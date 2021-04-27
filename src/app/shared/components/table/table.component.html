@@ -2,7 +2,6 @@
     <ng-content select="[tableToolbarButton]"></ng-content>
 </div>
 
-<!-- <div class="table-content mat-elevation-z8" [class.table-with-toolbar]="showToolbar"> -->
 <div class="table-content mat-elevation-z8">
   <table mat-table [dataSource]="data" class="table">
     <ng-container *ngFor="let column of columnList" [matColumnDef]="column.id">

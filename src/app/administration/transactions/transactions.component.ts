@@ -4,10 +4,9 @@ import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { Wallet } from '../wallets/wallets.models';
 import { Column } from './../../shared/components/table/table.models';
-import { fromNewTransactionActions, fromTransactionsActions } from './../../store/actions';
+import { fromTransactionsActions } from './../../store/actions';
 import { fromTransactionsSelectors, fromWalletsSelectors } from './../../store/selectors';
 import { RootState } from './../../store/states';
-import { NewTransactionDialogComponent } from './new-transaction-dialog/new-transaction-dialog.component';
 import { TransactionLiteral } from './transactions.literals';
 import { Transaction } from './transactions.models';
 
