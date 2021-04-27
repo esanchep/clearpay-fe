@@ -2,17 +2,17 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { Column } from 'src/app/shared/components/table/table.models';
-import { ApiResponse } from '../../shared/models/response.models';
+import { ApiResponse } from './../../shared/models/response.models';
 import { NewTransactionDialogComponent } from './new-transaction-dialog/new-transaction-dialog.component';
 import { TransactionLiteral } from './transactions.literals';
 import { Transaction } from './transactions.models';
-import { TransactionService } from './transactions.service';
+import { TransactionsService } from './transactions.service';
 
 @Component({
   selector: 'app-transactions',
   templateUrl: './transactions.component.html',
   styleUrls: [
-    '../administration.sections.scss',
+    './../administration.sections.scss',
     './transactions.component.scss'
   ]
 })
@@ -30,7 +30,7 @@ export class TransactionsComponent implements OnInit, OnDestroy {
 
   constructor(
     public dialog: MatDialog,
-    private transactionService: TransactionService
+    private transactionService: TransactionsService
   ) { }
 
   ngOnInit(): void {

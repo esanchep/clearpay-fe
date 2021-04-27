@@ -1,11 +1,11 @@
 import { createAction, props } from '@ngrx/store';
-import { User } from '../../administration/users/users.models';
-import { ApiResponse } from '../../shared/models/response.models';
+import { User } from './../../administration/users/users.models';
+import { ApiResponse } from './../../shared/models/response.models';
 
 export const UserAction = {
   GET_ALL_USERS: '[Users] Get all users',
   GET_ALL_USERS_SUCCESS: '[Users] Get all users success',
-  GET_ALL_USERS_FAILURE: '[Users] Get all users failure',
+  GET_ALL_USERS_FAILED: '[Users] Get all users failed',
   SET_SELECTED_USER: '[Users] Set selected user'
 };
 
@@ -18,8 +18,8 @@ export const getAllUsersSuccess = createAction(
   props<ApiResponse<User[]>>()
 );
 
-export const getAllUsersFailure = createAction(
-  UserAction.GET_ALL_USERS_FAILURE
+export const getAllUsersFailed = createAction(
+  UserAction.GET_ALL_USERS_FAILED
 );
 
 export const setSelectedUser = createAction(

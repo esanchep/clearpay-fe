@@ -1,26 +1,26 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { ApiResponse } from 'src/app/shared/models/response.models';
-import { User } from '../../administration/users/users.models';
-import { fromUserActions } from '../actions';
-import { UsersState } from '../states';
+import { User } from './../../administration/users/users.models';
+import { fromUsersActions } from './../actions';
+import { UsersState } from './../states';
 
 export const INITIAL_USERS_STATE: UsersState = undefined;
 
 const usersReducer = createReducer(
   INITIAL_USERS_STATE,
   on(
-    fromUserActions.getAllUsers,
-    fromUserActions.getAllUsersFailure,
+    fromUsersActions.getAllUsers,
+    fromUsersActions.getAllUsersFailed,
     () => INITIAL_USERS_STATE
   ),
   on(
-    fromUserActions.getAllUsersSuccess,
+    fromUsersActions.getAllUsersSuccess,
     (state: UsersState, data: ApiResponse<User[]>) => ({
       userList: data.body
     })
   ),
   on(
-    fromUserActions.setSelectedUser,
+    fromUsersActions.setSelectedUser,
     (state: UsersState, data: User) => ({ ...state, selectedUser: data })
   )
 );

@@ -3,8 +3,8 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { User } from 'src/app/administration/users/users.models';
-import { UsersService } from '../../administration/users/users.service';
-import { fromUserActions } from '../actions';
+import { UsersService } from './../../administration/users/users.service';
+import { fromUsersActions } from './../actions';
 import { ApiResponse } from './../../shared/models/response.models';
 
 @Injectable()
@@ -17,13 +17,13 @@ export class UsersEffects {
 
   getAllUsers$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(fromUserActions.getAllUsers),
+      ofType(fromUsersActions.getAllUsers),
       switchMap(() => this.usersService.getAllUsers().pipe(
-        map((response: ApiResponse<User[]>) => fromUserActions.getAllUsersSuccess(response))
+        map((response: ApiResponse<User[]>) => fromUsersActions.getAllUsersSuccess(response))
       )),
       catchError(() => {
         // TODO show notification error
-        return of(fromUserActions.getAllUsersFailure());
+        return of(fromUsersActions.getAllUsersFailed());
       })
     )
   );

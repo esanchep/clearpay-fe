@@ -1,10 +1,8 @@
-<!-- TODO remove filter and recalculate CSS heights -->
 <div class="table-toolbar" *ngIf="showToolbar">
     <ng-content select="[tableToolbarButton]"></ng-content>
 </div>
 
 <div class="table-content mat-elevation-z8" [class.table-with-toolbar]="showToolbar">
-  <!-- TODO create a Column interface like { id: string; literal: string } -->
   <table mat-table [dataSource]="data" class="table">
     <ng-container *ngFor="let column of columnList" [matColumnDef]="column.id">
       <th mat-header-cell *matHeaderCellDef>{{column.label | translate | uppercase}}</th>

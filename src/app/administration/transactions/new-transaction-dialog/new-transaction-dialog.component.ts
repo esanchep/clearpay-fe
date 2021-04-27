@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Transaction } from '../transactions.models';
+import { Transaction } from './../transactions.models';
 import { NewTransactionDialogInputData } from './new-transaction-dialog-models';
 import { NewTransactionLiteral } from './new-transaction-dialog.literals';
 

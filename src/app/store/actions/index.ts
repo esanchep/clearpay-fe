@@ -1,5 +1,7 @@
-import * as fromUserActions from './users.actions';
+import * as fromUsersActions from './users.actions';
+import * as fromWalletsActions from './wallets.actions';
 
 export {
-  fromUserActions
+  fromUsersActions,
+  fromWalletsActions
 };

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiResponse } from '../../shared/models/response.models';
+import { ApiResponse } from './../../shared/models/response.models';
 import { User } from './users.models';
 
 @Injectable({

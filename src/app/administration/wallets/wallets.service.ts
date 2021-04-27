@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiResponse } from '../../shared/models/response.models';
+import { ApiResponse } from './../../shared/models/response.models';
 import { Wallet } from './wallets.models';
 
 @Injectable({
   providedIn: 'root'
 })
-export class WalletService {
+export class WalletsService {
 
   constructor(private http: HttpClient) { }
 

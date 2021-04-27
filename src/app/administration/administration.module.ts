@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { TableModule } from '../shared/components/table/table.module';
+import { TableModule } from './../shared/components/table/table.module';
 import { AdministrationComponent } from './administration.component';
 import { NewTransactionDialogComponent } from './transactions/new-transaction-dialog/new-transaction-dialog.component';
 import { TransactionsComponent } from './transactions/transactions.component';

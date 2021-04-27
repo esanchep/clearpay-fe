@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiResponse } from '../../shared/models/response.models';
+import { ApiResponse } from './../../shared/models/response.models';
 import { Transaction } from './transactions.models';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TransactionService {
+export class TransactionsService {
 
   constructor(private http: HttpClient) { }
 

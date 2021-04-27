@@ -1,8 +1,8 @@
 import { createSelector } from '@ngrx/store';
-import { User } from '../../administration/users/users.models';
-import { RootState, UsersState } from '../states';
+import { User } from './../../administration/users/users.models';
+import { RootState, UsersState } from './../states';
 
-export const usersSelectors = (state: RootState) => state.users;
+export const usersSelectors = (state: RootState) => state?.users;
 
 export const selectAllUsers = createSelector(
   usersSelectors,
@@ -11,5 +11,10 @@ export const selectAllUsers = createSelector(
 
 export const selectAllUsersButSelectedUser = createSelector(
   usersSelectors,
-  (state: UsersState) => state.userList.filter((user: User) => user.id !== state.selectedUser?.id)
+  (state: UsersState) => state.userList.filter((user: User) => user.id !== state?.selectedUser?.id)
+);
+
+export const selectSelectedUSer = createSelector(
+  usersSelectors,
+  (state: UsersState) => state?.selectedUser
 );

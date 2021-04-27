@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { Column } from 'src/app/shared/components/table/table.models';
-import { fromUserActions } from 'src/app/store/actions';
+import { fromUsersActions } from 'src/app/store/actions';
 import { fromUsersSelectors } from 'src/app/store/selectors';
 import { RootState } from 'src/app/store/states';
 import { UserLiteral } from './users.literals';
@@ -12,7 +12,7 @@ import { User } from './users.models';
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: [
-    '../administration.sections.scss',
+    './../administration.sections.scss',
     './users.component.scss'
   ]
 })
@@ -31,14 +31,14 @@ export class UsersComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.store.dispatch(fromUserActions.getAllUsers());
+    this.store.dispatch(fromUsersActions.getAllUsers());
 
     this.usersSubscription = this.store.pipe(select(fromUsersSelectors.selectAllUsers))
       .subscribe((userList: User[]) => this.users = userList);
   }
 
-  onRowSelected($userSelected: User): void {
-    this.store.dispatch(fromUserActions.setSelectedUser($userSelected));
+  onRowSelected($SelectedUser: User): void {
+    this.store.dispatch(fromUsersActions.setSelectedUser($SelectedUser));
   }
 
   ngOnDestroy(): void {
