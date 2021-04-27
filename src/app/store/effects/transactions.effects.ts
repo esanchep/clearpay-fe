@@ -22,7 +22,13 @@ export class TransactionsEffects {
     this.actions$.pipe(
       ofType(fromTransactionsActions.getTransactionsByWalletId),
       switchMap((wallet: { walletId: string; }) => this.transactionsService.getTransactionsByWallet(wallet.walletId).pipe(
-        map((response: ApiResponse<Transaction[]>) => fromTransactionsActions.getTransactionsByWalletIdSuccess(response))
+        map((response: ApiResponse<Transaction[]>) => {
+          if (!response.body) {
+            // TODO show notification error
+            return fromTransactionsActions.getTransactionsByWalletIdFailed();
+          }
+          return fromTransactionsActions.getTransactionsByWalletIdSuccess(response);
+        })
       )),
       catchError(() => {
         // TODO show notification error

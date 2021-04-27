@@ -22,7 +22,13 @@ export class UsersEffects {
     this.actions$.pipe(
       ofType(fromUsersActions.getAllUsers),
       switchMap(() => this.usersService.getAllUsers().pipe(
-        map((response: ApiResponse<User[]>) => fromUsersActions.getAllUsersSuccess(response))
+        map((response: ApiResponse<User[]>) => {
+          if (!response.body) {
+            // TODO show notification error
+            return fromUsersActions.getAllUsersFailed();
+          }
+          return fromUsersActions.getAllUsersSuccess(response);
+        })
       )),
       catchError(() => {
         // TODO show notification error

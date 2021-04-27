@@ -22,7 +22,13 @@ export class WalletsEffects {
     this.actions$.pipe(
       ofType(fromWalletsActions.getWalletsByUserId),
       switchMap((user: { userId: string; }) => this.walletsService.getWalletsByUserId(user.userId).pipe(
-        map((response: ApiResponse<Wallet[]>) => fromWalletsActions.getWalletsByUserIdSuccess(response))
+        map((response: ApiResponse<Wallet[]>) => {
+          if (!response.body) {
+            // TODO show notification error
+            return fromWalletsActions.getWalletsByUserIdFailed();
+          }
+          return fromWalletsActions.getWalletsByUserIdSuccess(response);
+        })
       )),
       catchError(() => {
         // TODO show notification error
