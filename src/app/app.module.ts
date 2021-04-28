@@ -10,6 +10,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { DevStoreModule } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { NotificationModule } from './shared/components/notification/notification.module';
 import { fromNewTransactionEffects, fromTransactionsEffects, fromUsersEffects, fromWalletsEffects } from './store/effects';
 import { reducers } from './store/reducers';
 
@@ -33,6 +34,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     ]),
     HttpClientModule,
     MatToolbarModule,
+    NotificationModule,
     StoreModule.forRoot(reducers, {
       runtimeChecks: {}
     }),

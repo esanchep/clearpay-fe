@@ -4,8 +4,10 @@ import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { RootState } from '../states';
+import { Literal } from './../../../assets/i18n/literals';
 import { User } from './../../administration/users/users.models';
 import { UsersService } from './../../administration/users/users.service';
+import { NotificationService } from './../../shared/components/notification/notification.service';
 import { ApiResponse } from './../../shared/models/response.models';
 import { fromTransactionsActions, fromUsersActions, fromWalletsActions } from './../actions';
 
@@ -14,6 +16,7 @@ export class UsersEffects {
 
   constructor(
     private actions$: Actions,
+    private notificationService: NotificationService,
     private store: Store<RootState>,
     private usersService: UsersService
   ) { }
@@ -24,14 +27,14 @@ export class UsersEffects {
       switchMap(() => this.usersService.getAllUsers().pipe(
         map((response: ApiResponse<User[]>) => {
           if (!response.body) {
-            // TODO show notification error
+            this.notificationService.error(Literal.administration.users.errorGettingUsers);
             return fromUsersActions.getAllUsersFailed();
           }
           return fromUsersActions.getAllUsersSuccess(response);
         })
       )),
       catchError(() => {
-        // TODO show notification error
+        this.notificationService.error(Literal.administration.users.errorGettingUsers);
         this.store.dispatch(fromWalletsActions.resetState());
         this.store.dispatch(fromTransactionsActions.resetState());
         return of(fromUsersActions.getAllUsersFailed());
