@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { select, Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
@@ -66,66 +66,118 @@ export class NewTransactionDialogComponent implements OnInit, OnDestroy {
   }
 
   private initFormState(): void {
-    this.form.get('sourceUsername').disable();
-    this.form.get('sourceWalletName').disable();
-    this.form.get('sourceBalance').disable();
-    this.form.get('destinationWallet').disable();
-    this.form.get('destinationBalance').disable();
-    this.form.get('amount').disable();
+    this.sourceUsernameControl().disable();
+    this.sourceWalletNameControl().disable();
+    this.sourceBalanceControl().disable();
+    this.destinationWalletControl().disable();
+    this.destinationBalanceControl().disable();
+    this.amountControl().disable();
   }
 
   private getWalletList(walletList: Wallet[]): Wallet[] {
-    if (this.form.get('sourceUserId').value !== this.form.get('destinationUserId').value) {
+    if (this.sourceUserIdControl().value !== this.destinationUserIdControl().value) {
       return walletList;
     }
-    return walletList?.filter((wallet: Wallet) => wallet.id !== this.form?.get('sourceWalletId').value);
+    return walletList?.filter((wallet: Wallet) => wallet.id !== this.sourceWalletIdControl().value);
   }
 
   onDestinationUserSelected(): void {
-    const destinationUserId: string = this.form.get('destinationUserId').value;
-    this.form.get('destinationWallet').enable();
+    const destinationUserId: string = this.destinationUserIdControl().value;
+    this.destinationWalletControl().enable();
     this.store.dispatch(fromNewTransactionActions.getDestinationWalletsByUserId({ userId: destinationUserId }));
     this.setAmountFieldEditable();
   }
 
   onDestinationWalletSelected($selectedWalletChange: MatSelectChange): void {
     this.selectedDestinationWalletBalance = $selectedWalletChange.value.balance;
-    const destinationWalletBalance = this.form.get('destinationWallet').value?.balance;
-    this.form.get('sourceBalance').setValue(this.selectedSourceWalletBalance);
-    this.form.get('destinationBalance').setValue(destinationWalletBalance);
-    this.form.get('amount').setValue(0);
+    const destinationWalletBalance = this.destinationWalletControl().value?.balance;
+    this.sourceBalanceControl().setValue(this.selectedSourceWalletBalance);
+    this.destinationBalanceControl().setValue(destinationWalletBalance);
+    this.amountControl().setValue(0);
     this.setAmountFieldEditable();
   }
 
   private setAmountFieldEditable(): void {
     if (!this.areDestinationUserAndWalletSelected()) {
-      this.form.get('amount').disable();
+      this.amountControl().disable();
       return;
     }
-    this.form.get('amount').enable();
+    this.amountControl().enable();
   }
 
   updateBalances(): void {
-    const amount = this.form.get('amount').value;
+    const amount = this.amountControl().value;
     if (this.areDestinationUserAndWalletSelected()) {
-      this.form.get('sourceBalance').setValue(this.selectedSourceWalletBalance - amount);
-      this.form.get('destinationBalance').setValue(this.selectedDestinationWalletBalance + amount);
+      this.sourceBalanceControl().setValue(this.selectedSourceWalletBalance - amount);
+      this.destinationBalanceControl().setValue(this.selectedDestinationWalletBalance + amount);
     }
   }
 
   private areDestinationUserAndWalletSelected(): boolean {
-    return this.form.get('destinationUserId').value && this.form.get('destinationWallet').value;
+    return this.destinationUserIdControl().value && this.destinationWalletControl().value;
   }
 
   getTransaction(): Transaction {
     const newTransaction = {
-      sourceWalletId: this.form.get('sourceWalletId').value,
-      destinationWalletId: this.form.get('destinationWallet').value?.id,
-      amount: this.form.get('amount').value,
+      sourceWalletId: this.sourceWalletIdControl().value,
+      destinationWalletId: this.destinationWalletControl().value?.id,
+      amount: this.amountControl().value,
       date: new Date(),
-      comment: this.form.get('comment').value
+      comment: this.commentControl().value
     };
     return newTransaction;
+  }
+
+  hasError(formControlName: string, errorType: string): boolean {
+    return this.control(formControlName).hasError(errorType);
+  }
+
+  private sourceUsernameControl(): AbstractControl {
+    return this.control('sourceUsername');
+  }
+
+  private sourceUserIdControl(): AbstractControl {
+    return this.control('sourceUserId');
+  }
+
+  private destinationUserIdControl(): AbstractControl {
+    return this.control('destinationUserId');
+  }
+
+  private sourceWalletIdControl(): AbstractControl {
+    return this.control('sourceWalletId');
+  }
+
+  private sourceWalletNameControl(): AbstractControl {
+    return this.control('sourceWalletName');
+  }
+
+  private destinationWalletControl(): AbstractControl {
+    return this.control('destinationWallet');
+  }
+
+  private sourceBalanceControl(): AbstractControl {
+    return this.control('sourceBalance');
+  }
+
+  private destinationBalanceControl(): AbstractControl {
+    return this.control('destinationBalance');
+  }
+
+  private amountControl(): AbstractControl {
+    return this.control('amount');
+  }
+
+  private commentControl(): AbstractControl {
+    return this.control('comment');
+  }
+
+  private control(formControlName: string): AbstractControl {
+    return this.form.get(formControlName);
+  }
+
+  isValidForm(): boolean {
+    return this.form.valid;
   }
 
   ngOnDestroy(): void {
