@@ -17,14 +17,14 @@ import { User } from './users.models';
   ]
 })
 export class UsersComponent implements OnInit, OnDestroy {
-  public users: User[];
-  public columns: Column[] = [
+  users: User[];
+  columns: Column[] = [
     { id: 'username', label: UserLiteral.username },
     { id: 'name', label: UserLiteral.name },
     { id: 'surname', label: UserLiteral.surname }
   ];
-  public literal = UserLiteral;
-  public selectedUser: User;
+  literal = UserLiteral;
+  selectedUser: User;
   private usersSubscription: Subscription;
 
   constructor(

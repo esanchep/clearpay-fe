@@ -21,18 +21,18 @@ import { Wallet } from './wallets.models';
   ]
 })
 export class WalletsComponent implements OnInit, OnDestroy {
-  public wallets: Wallet[];
-  public columns: Column[] = [
+  wallets: Wallet[];
+  columns: Column[] = [
     { id: 'alias', label: WalletLiteral.alias },
     { id: 'balance', label: WalletLiteral.balance },
   ];
-  public literal = WalletLiteral;
-  public selectedWallet: Wallet;
-  public selectedUser: User;
+  literal = WalletLiteral;
+  selectedWallet: Wallet;
+  selectedUser: User;
   private walletsSubscription: Subscription;
 
   constructor(
-    public dialog: MatDialog,
+    private dialog: MatDialog,
     private store: Store<RootState>
   ) { }
 

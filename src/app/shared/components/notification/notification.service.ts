@@ -9,7 +9,7 @@ import { NotificationType } from './notification.models';
 export class NotificationService {
   private DEFAULT_TIMING = 5000;
 
-  constructor(public snackBar: MatSnackBar) { }
+  constructor(private snackBar: MatSnackBar) { }
 
   success(message: string, parameters?: any, timing?: number): void {
     this.openSnackBar(message, NotificationType.SUCCESS, timing, parameters, 'success');

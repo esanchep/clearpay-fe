@@ -19,20 +19,20 @@ import { Transaction } from './transactions.models';
   ]
 })
 export class TransactionsComponent implements OnInit, OnDestroy {
-  public transactions: Transaction[];
-  public columns: Column[] = [
+  transactions: Transaction[];
+  columns: Column[] = [
     { id: 'sourceWalletId', label: TransactionLiteral.sourceWallet },
     { id: 'destinationWalletId', label: TransactionLiteral.destinationWallet },
     { id: 'amount', label: TransactionLiteral.amount },
     { id: 'date', label: TransactionLiteral.date },
     { id: 'comment', label: TransactionLiteral.comment }
   ];
-  public readonly literal = TransactionLiteral;
-  public selectedTransaction: Transaction;
+  readonly literal = TransactionLiteral;
+  selectedTransaction: Transaction;
   private transactionsSubscription: Subscription;
 
   constructor(
-    public dialog: MatDialog,
+    private dialog: MatDialog,
     private store: Store<RootState>
   ) { }
 

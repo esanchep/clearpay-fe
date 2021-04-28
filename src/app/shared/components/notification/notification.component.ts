@@ -8,26 +8,26 @@ import { NotificationData } from './notification.models';
   styleUrls: ['./notification.component.scss']
 })
 export class NotificationComponent {
-  public message: string;
-  public type: string;
-  public parameters: any;
-  public icons = {
+  message: string;
+  type: string;
+  parameters: any;
+  icons = {
     success: 'check_circle',
     error: 'error'
   };
 
   constructor(
-    @Inject(MAT_SNACK_BAR_DATA) public data: NotificationData,
+    @Inject(MAT_SNACK_BAR_DATA) private data: NotificationData,
     private dialogRef: MatSnackBarRef<NotificationComponent>
   ) {
-    this.message = data.message;
-    this.type = data.type;
-    if (!!data.parameters) {
-      this.parameters = data.parameters;
+    this.message = this.data.message;
+    this.type = this.data.type;
+    if (!!this.data.parameters) {
+      this.parameters = this.data.parameters;
     }
   }
 
-  public closeDialog(): void {
+  closeDialog(): void {
     this.dialogRef.dismiss();
   }
 

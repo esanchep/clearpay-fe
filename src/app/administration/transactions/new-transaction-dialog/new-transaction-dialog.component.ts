@@ -18,10 +18,10 @@ import { NewTransactionLiteral } from './new-transaction-dialog.literals';
   styleUrls: ['./new-transaction-dialog.component.scss']
 })
 export class NewTransactionDialogComponent implements OnInit, OnDestroy {
-  public form: FormGroup;
-  public literal = NewTransactionLiteral;
-  public eligibleDestinationUsers: User[];
-  public eligibleDestinationWallets: Wallet[];
+  form: FormGroup;
+  literal = NewTransactionLiteral;
+  eligibleDestinationUsers: User[];
+  eligibleDestinationWallets: Wallet[];
   private newTransactionSubscription: Subscription;
   private selectedSourceWalletBalance: number;
   private selectedDestinationWalletBalance: number;
@@ -113,7 +113,7 @@ export class NewTransactionDialogComponent implements OnInit, OnDestroy {
     }
   }
 
-  areDestinationUserAndWalletSelected(): boolean {
+  private areDestinationUserAndWalletSelected(): boolean {
     return this.form.get('destinationUserId').value && this.form.get('destinationWallet').value;
   }
 

@@ -15,8 +15,7 @@ export class TableComponent implements OnInit {
   @Input() showToolbar = false;
   @Input() selectedRow: TableEntity;
   @Output() selectedRowChange = new EventEmitter<TableEntity>();
-  public filter: string;
-  public columnList: Column[];
+  columnList: Column[];
 
   constructor(
     private currencyPipe: CurrencyPipe,
