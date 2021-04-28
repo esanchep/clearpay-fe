@@ -66,11 +66,7 @@ export class NewTransactionDialogComponent implements OnInit, OnDestroy {
   }
 
   private initFormState(): void {
-    this.sourceUsernameControl().disable();
-    this.sourceWalletNameControl().disable();
-    this.sourceBalanceControl().disable();
     this.destinationWalletControl().disable();
-    this.destinationBalanceControl().disable();
     this.amountControl().disable();
   }
 
@@ -109,6 +105,7 @@ export class NewTransactionDialogComponent implements OnInit, OnDestroy {
     const amount = this.amountControl().value;
     if (this.areDestinationUserAndWalletSelected()) {
       this.sourceBalanceControl().setValue(this.selectedSourceWalletBalance - amount);
+      this.sourceBalanceControl().markAsTouched();
       this.destinationBalanceControl().setValue(this.selectedDestinationWalletBalance + amount);
     }
   }
