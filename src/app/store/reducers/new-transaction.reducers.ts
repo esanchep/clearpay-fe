@@ -11,8 +11,6 @@ const newTransactionReducer = createReducer(
   INITIAL_NEW_TRANSACTION_STATE,
   on(
     fromNewTransactionActions.resetState,
-    fromNewTransactionActions.addNewTransactionSuccess,
-    fromNewTransactionActions.addNewTransactionFailed,
     () => INITIAL_NEW_TRANSACTION_STATE
   ),
   on(
@@ -42,6 +40,8 @@ const newTransactionReducer = createReducer(
   ),
   on(
     fromNewTransactionActions.resetDestinationWallets,
+    fromNewTransactionActions.addNewTransactionSuccess,
+    fromNewTransactionActions.addNewTransactionFailed,
     fromNewTransactionActions.getDestinationWalletsByUserId,
     fromNewTransactionActions.getDestinationWalletsByUserIdFailed,
     (state: NewTransactionState) => ({
