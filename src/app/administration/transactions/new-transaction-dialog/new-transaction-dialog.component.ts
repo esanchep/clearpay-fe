@@ -60,7 +60,7 @@ export class NewTransactionDialogComponent implements OnInit, OnDestroy {
       amount: [0, [Validators.required, Validators.min(0.1)]],
       comment: [undefined],
       destinationUserId: [undefined, Validators.required],
-      destinationWallet: [undefined],
+      destinationWallet: [undefined, Validators.required],
       destinationBalance: [undefined]
     });
   }
@@ -80,6 +80,7 @@ export class NewTransactionDialogComponent implements OnInit, OnDestroy {
   onDestinationUserSelected(): void {
     const destinationUserId: string = this.destinationUserIdControl().value;
     this.destinationWalletControl().enable();
+    this.destinationWalletControl().setValue(undefined);
     this.store.dispatch(fromNewTransactionActions.getDestinationWalletsByUserId({ userId: destinationUserId }));
     this.setAmountFieldEditable();
   }
@@ -106,6 +107,7 @@ export class NewTransactionDialogComponent implements OnInit, OnDestroy {
     if (this.areDestinationUserAndWalletSelected()) {
       this.sourceBalanceControl().setValue(this.selectedSourceWalletBalance - amount);
       this.sourceBalanceControl().markAsTouched();
+      this.form.markAsTouched();
       this.destinationBalanceControl().setValue(this.selectedDestinationWalletBalance + amount);
     }
   }
